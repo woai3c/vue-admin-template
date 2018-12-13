@@ -2,28 +2,28 @@
 vue轻量级后台管理系统基础模板
 
 ## 相关依赖
-* vue-router
-* iview
-* axios
+* [vue-router](https://router.vuejs.org/zh/)
+* [iview](https://www.iviewui.com/docs/guide/install)
+* [axios](https://www.kancloud.cn/yunye/axios/234845)
 
 ## 功能
 
-### 标签栏
+#### 标签栏
 * 点击标签切换页面
 * 刷新当前标签页
 * 关闭其他标签/关闭所有标签
 
-### 侧边栏
+#### 侧边栏
 * 伸展/收缩
 * 页面宽度过小自动收缩
 * 多级菜单（利用iView组件）
 
-### 用户相关
+#### 用户相关
 * 消息通知
 * 用户头像
 * 基本资料
 
-### 其它
+#### 其它
 利用axios拦截器 实现了ajax请求前展示loading 请求结束关闭loading
 
 ## 注意
