@@ -1,5 +1,5 @@
 <template>
-    <div class="login-vue">
+    <div class="login-vue" :class="bgUrl">
         <div class="container">
             <p class="title">WELCOME</p>
             <div class="input-c">
@@ -19,6 +19,12 @@
 <script>
 export default {
     name: 'Login',
+    computed: {
+        bgUrl() {
+            // 周一至周日 显示不同的背景
+            return 'bg-url' + new Date().getDay()
+        }
+    },
     methods: {
         register() {
 
@@ -39,8 +45,28 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url(../../assets/bg04.jpg);
     color: #fff;
+}
+.bg-url0 {
+    background-image: url(../../assets/bg00.jpg)
+}
+.bg-url1 {
+    background-image: url(../../assets/bg01.jpg)
+}
+.bg-url2 {
+    background-image: url(../../assets/bg02.jpg)
+}
+.bg-url3 {
+    background-image: url(../../assets/bg03.jpg)
+}
+.bg-url4 {
+    background-image: url(../../assets/bg04.jpg)
+}
+.bg-url5 {
+    background-image: url(../../assets/bg05.jpg)
+}
+.bg-url6 {
+    background-image: url(../../assets/bg06.jpg)
 }
 .login-vue .container {
     background: rgba(255, 255, 255, .5);

@@ -1,0 +1,2 @@
+webpackJsonp([3],{QbRM:function(e,n){},zaOn:function(e,n,t){"use strict";Object.defineProperty(n,"__esModule",{value:!0});var a={render:function(){var e=this.$createElement;return(this._self._c||e)("div",[this._v("\n    查看消息\n")])},staticRenderFns:[]};var r=t("VU/8")({name:"Msg",data:function(){return{}}},a,!1,function(e){t("QbRM")},"data-v-50e8d00a",null);n.default=r.exports}});
+//# sourceMappingURL=3.554da17f4801a97b8310.js.map
