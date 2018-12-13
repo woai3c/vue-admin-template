@@ -7,7 +7,7 @@ const Login = () => import('@/components/Login/Login')
 const Index = () => import('@/components/Index/Index')
 
 const Home = () => import('@/components/Home/Home')
-const Table = () => import('@/components/Table/Table')
+const T1 = () => import('@/components/T1/T1')
 const Password = () => import('@/components/Password/Password')
 const Msg = () => import('@/components/Msg/Msg')
 const UserInfo = () => import('@/components/UserInfo/UserInfo')
@@ -21,9 +21,9 @@ const children = [
         component: Home 
     },
     {
-        path: 'table',
-        name: 'Table',
-        component: Table 
+        path: 't1',
+        name: 'T1',
+        component: T1 
     },
     {
         path: 'password',

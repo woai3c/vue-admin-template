@@ -17,12 +17,12 @@
                         <span v-show="isShowAsideTitle">二级菜单</span>
                     </template>
                     <!-- name:路由名称 -->
-                    <MenuItem v-show="isShowAsideTitle" name="Msg">查看消息</MenuItem>
-                    <MenuItem v-show="isShowAsideTitle" name="UserInfo">基本资料</MenuItem>
-                    <MenuItem v-show="isShowAsideTitle" name="Password">修改密码</MenuItem>
+                    <MenuItem v-show="isShowAsideTitle" name="T1">表格</MenuItem>
                     <Submenu name="3">
                         <template slot="title">三级菜单</template>
-                        <MenuItem name="Table">表格</MenuItem>
+                        <MenuItem name="Msg">查看消息</MenuItem>
+                        <MenuItem name="Password">修改密码</MenuItem>
+                        <MenuItem name="UserInfo">基本资料</MenuItem>
                     </Submenu>
                 </Submenu>
             </Menu>
@@ -121,7 +121,7 @@ export default {
             // 由于iView的导航菜单比较坑 只能设定一个name参数
             // 所以需要在这定义组件名称和标签栏标题的映射表 有多少个页面就有多少个映射条数
             nameToTitle: {
-                Table: '表格',
+                T1: '表格',
                 Password: '修改密码',
                 UserInfo: '基本资料',
                 Msg: '查看消息',
@@ -187,7 +187,7 @@ export default {
         // 跳转页面
         gotoPage(name) {
             this.$router.push({name})
-            
+    
             if (!this.keepAliveData.includes(name)) {
                 // 如果标签超过8个 则将第一个标签删除
                 if (this.tagsArry.length == 8) {

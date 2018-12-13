@@ -1,8 +1,9 @@
 <template>
     <div>
+        <input type="text">
         <div class="query-c">
             查询：
-            <Input @on-search="search" search placeholder="请输入查询内容" style="width: auto" />
+            <Input search placeholder="请输入查询内容" style="width: auto" />
         </div>
         <Table border stripe :columns="columns1" :data="data1"></Table>
         <br>
@@ -12,7 +13,7 @@
 
 <script>
 export default {
-    name: 'Query1',
+    name: 'T1',
     data() {
         return {
             columns1: [
@@ -56,17 +57,10 @@ export default {
                 }
             ]
         }
-    },
-    methods: {
-        search(val) {
-            console.log(val.length)
-        }
     }
 }
 </script>
 
 <style scoped>
-.query-c {
-    margin-bottom: 20px;
-}
+
 </style>

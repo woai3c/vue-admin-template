@@ -3,12 +3,12 @@
         <div class="container">
             <p class="title">WELCOME</p>
             <div class="input-c">
-                <Input prefix="ios-contact" placeholder="用户名"/>
-                <p class="error"></p>
+                <Input prefix="ios-contact" placeholder="用户名" @on-blur="verifyAccount"/>
+                <p class="error">{{accountError}}</p>
             </div>
             <div class="input-c">
-                <Input type="password" prefix="md-lock" placeholder="密码"/>
-                <p class="error"></p>
+                <Input type="password" prefix="md-lock" placeholder="密码" @on-blur="verifyPwd"/>
+                <p class="error">{{pwdError}}</p>
             </div>
             <Button class="submit" type="primary" @click="submit">登陆</Button>
             <p class="account"><span @click="register">注册账号</span> | <span @click="forgetPwd">忘记密码</span></p>
@@ -19,6 +19,14 @@
 <script>
 export default {
     name: 'Login',
+    data() {
+        return {
+            account: '',
+            pwd: '',
+            accountError: '',
+            pwdError: ''
+        }
+    },
     computed: {
         bgUrl() {
             // 周一至周日 显示不同的背景
@@ -26,14 +34,47 @@ export default {
         }
     },
     methods: {
+        verifyAccount(e) {
+            this.account = e.target.value 
+            if (this.account !== 'admin') {
+                this.accountError = '账号为admin'
+            } else {
+                this.accountError = ''
+            }
+        },
+        verifyPwd(e) {
+            this.pwd = e.target.value
+            if (this.pwd !== 'admin') {
+                this.pwdError = '密码为admin'
+            } else {
+                this.pwdError = ''
+            }
+        },
         register() {
-
+            console.log('注册账号')
         },
         forgetPwd() {
-
+            console.log('忘记密码')
         },
         submit() {
-            this.$router.push('index')
+            if (this.account !== '' && this.pwd !== '' 
+                && this.accountError === ''
+                && this.pwdError === ''
+                ) {
+                this.$router.push('index')
+            } else {
+                if (this.account !== 'admin') {
+                    this.accountError = '账号为admin'
+                } else {
+                    this.accountError = ''
+                }
+
+                if (this.pwd !== 'admin') {
+                    this.pwdError = '密码为admin'
+                } else {
+                    this.pwdError = ''
+                }
+            }
         }
     }
 }
@@ -82,16 +123,16 @@ export default {
     border-color: #fff;
 }
 .login-vue ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-    color: rgba(255, 255, 255, .7);
+    color: rgba(255, 255, 255, .8);
 }
 .login-vue :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-    color: rgba(255, 255, 255, .7);
+    color: rgba(255, 255, 255, .8);
 }
 .login-vue ::-moz-placeholder { /* Mozilla Firefox 19+ */
-    color: rgba(255, 255, 255, .7);
+    color: rgba(255, 255, 255, .8);
 }
 .login-vue :-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: rgba(255, 255, 255, .7);
+    color: rgba(255, 255, 255, .8);
 }
 .login-vue .title {
     font-size: 16px;
