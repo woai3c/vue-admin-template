@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: 'App',
+    name: 'App'
 }
 </script>
 
@@ -24,6 +24,9 @@ li, ul, p, div, body, html, table {
 html, body {
     height: 100%;
     overflow: hidden;
+}
+li {
+    list-style: none;
 }
 #app {
     height: 100%;

@@ -1,12 +1,17 @@
 <template>
     <div>
-
+        查看消息
     </div>
 </template>
 
 <script>
 export default {
-    name: 'Home'
+    name: 'Msg',
+    data() {
+        return {
+
+        }
+    }
 }
 </script>
 

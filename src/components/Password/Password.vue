@@ -1,12 +1,17 @@
 <template>
     <div>
-
+        修改密码
     </div>
 </template>
 
 <script>
 export default {
-    name: 'Home'
+    name: 'Password',
+    data() {
+        return {
+
+        }
+    }
 }
 </script>
 

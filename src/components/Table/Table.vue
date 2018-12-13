@@ -5,12 +5,14 @@
             <Input @on-search="search" search placeholder="请输入查询内容" style="width: auto" />
         </div>
         <Table border stripe :columns="columns1" :data="data1"></Table>
+        <br>
+        <Page :total="100" show-sizer show-elevator/>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'Query3',
+    name: 'Query1',
     data() {
         return {
             columns1: [

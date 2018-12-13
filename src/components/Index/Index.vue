@@ -7,21 +7,22 @@
                 <span v-show="isShowAsideTitle">后台管理系统</span>
             </div>
             <Menu theme="dark" width="100%" @on-select="gotoPage">
-                <MenuItem v-show="isShowAsideTitle" name="Home"><Icon size="18" type="md-home" />主页</MenuItem>
+                <MenuItem name="Home">
+                    <Icon size="18" type="md-home" />
+                    <span v-show="isShowAsideTitle">主页</span>
+                </MenuItem>
                 <Submenu name="2">
                     <template slot="title">
                         <Icon type="ios-paper"/>
-                        <span v-show="isShowAsideTitle">表格</span>
+                        <span v-show="isShowAsideTitle">二级菜单</span>
                     </template>
                     <!-- name:路由名称 -->
-                    <MenuItem v-show="isShowAsideTitle" name="Query1">表格1</MenuItem>
-                    <MenuItem v-show="isShowAsideTitle" name="Query2">表格2</MenuItem>
-                    <MenuItem v-show="isShowAsideTitle" name="Query3">表格3</MenuItem>
-                    <MenuItem v-show="isShowAsideTitle" name="Query4">表格4</MenuItem>
+                    <MenuItem v-show="isShowAsideTitle" name="Msg">查看消息</MenuItem>
+                    <MenuItem v-show="isShowAsideTitle" name="UserInfo">基本资料</MenuItem>
+                    <MenuItem v-show="isShowAsideTitle" name="Password">修改密码</MenuItem>
                     <Submenu name="3">
-                        <template slot="title">Submenu</template>
-                        <MenuItem name="Query1">Option 7</MenuItem>
-                        <MenuItem name="Query1">Option 8</MenuItem>
+                        <template slot="title">三级菜单</template>
+                        <MenuItem name="Table">表格</MenuItem>
                     </Submenu>
                 </Submenu>
             </Menu>
@@ -33,16 +34,25 @@
             <div class="top-c">
                 <header>
                     <div class="h-left">
-                        <div class="shrinkAside-c" @click="isShrinkAside" title="收缩/展开">
+                        <div class="pointer" @click="isShrinkAside" title="收缩/展开">
                             <Icon type="ios-apps" />
                         </div>
                         <div class="refresh-c" @click="reloadPage" title="刷新当前标签页">
                             <Icon type="md-refresh" />
                         </div>
+                        <div class="tag-options">
+                            <Dropdown @on-click="closeTags">
+                                <Icon type="ios-options" />
+                                <DropdownMenu slot="list">
+                                    <DropdownItem name="1">关闭其他标签</DropdownItem>
+                                    <DropdownItem name="2">关闭所有标签</DropdownItem>
+                                </DropdownMenu>
+                            </Dropdown>
+                        </div>
                     </div>
                     <div class="h-right">
-                        <div class="notice-c">
-                            <div class="newMsg"></div>
+                        <div class="notice-c" @click="info" title="查看新消息">
+                            <div :class="{newMsg: hasNewMsg}"></div>
                             <Icon type="ios-notifications-outline" />
                         </div>
                         <div class="user-img-c">
@@ -69,7 +79,7 @@
                         <a class="li-a">
                             {{item.text}}
                         </a>
-                        <Icon @click="closeTag(index)" type="md-close" />
+                        <Icon size="16" @click="closeTag(index)" type="md-close" />
                     </li>
                 </ul>
             </div>
@@ -77,8 +87,11 @@
             <div class="main-content">
                 <div class="view-c">
                     <keep-alive :include="keepAliveData">
-                        <router-view/>
+                        <router-view v-if="isShowRouter"/>
                     </keep-alive>
+                    <div class="loading-c" v-show="showLoading">
+                        <Spin size="large"></Spin>
+                    </div>
                 </div>
             </div>
         </section>
@@ -90,6 +103,10 @@ export default {
     name: 'Index',
     data () {
         return {
+            showLoading: false, // 是否显示loading
+            hasNewMsg: true, // 是否有新消息
+            isShowRouter: true,
+            msgNum: '10', // 新消息条数
             user: '小明', // 用户名
             userImg: require('../../assets/user.jpg'), // 用户图片
             // 标签栏         标签标题     路由名称
@@ -100,52 +117,95 @@ export default {
             isShowAsideTitle: true, // 是否展示侧边栏内容
             main: null, // 页面主要内容区域
             asideClassName: 'aside-big', // 控制侧边栏宽度变化
+            asideArrowIcons: [], // 缓存侧边栏箭头图标 收缩时用
             // 由于iView的导航菜单比较坑 只能设定一个name参数
-            // 所以需要在这定义路由名称和标签栏标题的映射表 有多少个页面就有多少个映射条数
+            // 所以需要在这定义组件名称和标签栏标题的映射表 有多少个页面就有多少个映射条数
             nameToTitle: {
-                Query1: '表格1',
-                Query2: '表格2',
-                Query3: '表格3',
-                Query4: '表格4',
+                Table: '表格',
+                Password: '修改密码',
+                UserInfo: '基本资料',
+                Msg: '查看消息',
                 Home: '首页'
             }
         }
     },
+    created() {
+        // 已经为ajax请求设置了loading 请求前自动调用 请求完成自动结束
+        // 添加请求拦截器
+        this.$axios.interceptors.request.use(config => {
+            this.showLoading = true
+            // 在发送请求之前做些什么
+            return config
+        }, error => {
+            this.showLoading = false
+            // 对请求错误做些什么
+            return Promise.reject(error)
+        })
+
+        // 添加响应拦截器
+        this.$axios.interceptors.response.use(response => {
+            this.showLoading = false
+            // 对响应数据做点什么
+            return response
+        }, error => {
+            this.showLoading = false
+            // 对响应错误做点什么
+            return Promise.reject(error)
+        })
+
+
+        // 如果直接跳转到指定页面 没有对应的标签页 则添加
+        const name = this.$route.name
+        if (!this.keepAliveData.includes(name)) {
+            this.tagsArry.push({name, text: this.nameToTitle[name]})
+        }
+    },
     mounted() {
         this.main = document.querySelector('.sec-right')
-        
+        this.asideArrowIcons = document.querySelectorAll('aside .ivu-icon-ios-arrow-down')
+        let w = document.documentElement.clientWidth || document.body.clientWidth
         window.onresize = () => {
-            this.main.style.width = this.isShowAsideTitle? 'calc(100% - 220px)' : 'calc(100% - 40px)'
-            let w = document.documentElement.clientWidth || document.body.clientWidth
             // 可视窗口宽度太小 自动收缩侧边栏
-            if (w < 1300) {
+            if (w < 1300 && this.isShowAsideTitle 
+                && w > (document.documentElement.clientWidth || document.body.clientWidth)) {
                 this.shrinkAside()
             }
+            w = document.documentElement.clientWidth || document.body.clientWidth
         }
     },
     computed: {
+        // 需要缓存的路由
         keepAliveData() {
             return this.tagsArry.map(item => item.name)
         }
     },
     methods: {
+        // 判断当前标签页是否激活状态
         isActive(name) {
             return this.$route.name === name
         },
+        // 跳转页面
         gotoPage(name) {
             this.$router.push({name})
             
             if (!this.keepAliveData.includes(name)) {
+                // 如果标签超过8个 则将第一个标签删除
+                if (this.tagsArry.length == 8) {
+                    this.tagsArry.shift()
+                }
                 this.tagsArry.push({name, text: this.nameToTitle[name]})
             }
         },
+        // 用户操作
         userOperate(name) {
             switch(name) {
                 case '1':
                     // 修改密码
+                    this.gotoPage('Password')
                     break
                 case '2':
                     // 基本资料
+                    this.gotoPage('UserInfo')
                     break
                 case '3':
                     this.$router.push({name: 'Login'})
@@ -153,45 +213,68 @@ export default {
                     break
             }
         },
+        // 控制用户三角箭头显示状态
         showArrow(flag) {
             this.arrowUp = flag
             this.arrowDown = !flag
         },
-        // 展开 收缩 侧边栏
+        // 判断
         isShrinkAside() {
             this.isShowAsideTitle? this.shrinkAside() : this.expandAside()
         },
+        // 收缩
         shrinkAside() {
-            this.asideClassName =''
-            this.isShowAsideTitle = false
-            this.main.style.width = 'calc(100% - 40px)'
+            document.querySelectorAll('aside>ul>.ivu-menu-opened>.ivu-menu-submenu-title').forEach(e => {
+                e.click()
+            })
+
+            this.asideArrowIcons.forEach(e => {
+                e.style.display = 'none'
+            })
+
+            setTimeout(() => {
+                this.asideClassName =''
+                this.isShowAsideTitle = false
+                this.main.style.width = 'calc(100% - 80px)'
+            }, 0)
         },
+        // 展开
         expandAside() {
             setTimeout(() => {
                 this.isShowAsideTitle = true
+                this.asideArrowIcons.forEach(e => {
+                    e.style.display = 'block'
+                })
             }, 200)
             this.asideClassName = 'aside-big'
             this.main.style.width = 'calc(100% - 220px)'
         },
+        // 刷新当前标签页
         reloadPage() {
             let name = this.$route.name
             let index = this.keepAliveData.indexOf(name)
-            this.closeTag(index, true)
-           
+
             this.$nextTick(() => {
                 if (this.tagsArry.length) {
-                    this.tagsArry.splice(index, 0, {name, text: this.nameToTitle[name]})
-                    this.gotoPage(name)
+                    this.isShowRouter = false
+                    this.tagsArry.splice(index, 1)
+                    this.$nextTick(() => {
+                        this.tagsArry.splice(index, 0, {name, text: this.nameToTitle[name]})
+                        this.gotoPage(name)
+                        this.isShowRouter = true
+                    })
                 } else {
-                    this.$router.push({name: 'Default'})
+                    this.isShowRouter = false
                     this.$nextTick(() => {
                         this.tagsArry.push({name, text: this.nameToTitle[name]})
                         this.gotoPage(name)
-                    })               
+                        this.isShowRouter = true
+                    })           
                 }
             })
         },
-        closeTag(i, flag) {
+        // 关闭标签
+        closeTag(i) {
             let name = this.tagsArry[i].name
             this.tagsArry.splice(i, 1)
 
@@ -207,16 +290,52 @@ export default {
                     }
                 }
             } else {
-                // 如果是重新刷新页面则不执行
-                if (!flag) {
-                    this.gotoPage('Home')
-                }
+                // 如果没有标签则跳往首页
+                this.gotoPage('Home')
             }
             
         },
+        closeTags(name) {
+            if (name == 1) {
+                // 关闭其他标签
+                this.tagsArry = []
+                this.gotoPage(this.$route.name)
+            } else {
+                // 关闭所有标签
+                this.tagsArry = []
+                this.gotoPage('Home')
+                this.reloadPage()
+            }
+        },
+        // 激活标签
         activeTag(i) {
             this.gotoPage(this.tagsArry[i].name)
         },
+        // 消息通知
+        info() {
+            const self = this
+            this.$Notice.info({
+                title: `您有${this.msgNum}条消息`,
+                render(h) {
+                    return h('Button', {
+                        attrs: {
+                            type: 'info',
+                            size: 'small'
+                        },
+                        on: {
+                            click() {
+                                // 点击查看跳转到消息页
+                                self.gotoPage('Msg')
+                                self.hasNewMsg = false,
+                                self.msgNum = 0
+                            }
+                        }
+                    }, [
+                        '点击查看',
+                    ])
+                }
+            })
+        }
     }
 }
 </script>
@@ -232,7 +351,7 @@ export default {
 
 /* 侧边栏 */
 aside {
-    min-width: 40px;
+    min-width: 80px;
     background: #20222A;
     height: 100%;
     transition: all .5s;
@@ -285,7 +404,7 @@ header .ivu-icon {
     font-size: 24px;
 }
 .refresh-c {
-    margin-left: 30px;
+    margin: 0 30px;
     cursor: pointer;
 }
 .h-right {
@@ -312,9 +431,6 @@ header .ivu-icon {
     right: 0;
     top: 0;
 }
-.shrinkAside-c {
-    cursor: pointer;
-}
 .user-img-c {
     width: 34px;
     height: 34px;
@@ -323,7 +439,10 @@ header .ivu-icon {
     margin: 0 40px;
     overflow: hidden;
 }
-
+.tag-options {
+    cursor: pointer;
+    position: relative;
+}
 
 /* 标签栏 */
 .ul-c {
@@ -382,10 +501,24 @@ a {
     padding: 15px;
 }
 .view-c {
+    position: relative;
     background: #fff;
     padding: 15px;
 }
 .pointer {
     cursor: pointer;
+}
+
+/* loading */
+.loading-c {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: rgba(255,255,255,.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 </style>

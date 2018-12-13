@@ -8,7 +8,12 @@ import 'iview/dist/styles/iview.css'
 Vue.config.productionTip = false
 Vue.use(iView)
 
-Vue.prototype.$ajax = axios
+// 设置基础URL
+axios.defaults.baseURL = ""
+// 设置请求超时时间
+axios.defaults.timeout = 5000
+
+Vue.prototype.$axios = axios
 
 new Vue({
     el: '#app',
