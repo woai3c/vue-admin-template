@@ -1,0 +1,2 @@
+webpackJsonp([2],{BW4r:function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r={render:function(){this.$createElement;this._self._c;return this._m(0)},staticRenderFns:[function(){var t=this.$createElement,e=this._self._c||t;return e("div",[this._v("\n    基本资料\n    "),e("input",{attrs:{type:"text"}})])}]};var i=n("VU/8")({name:"UserInfo",data:function(){return{}}},r,!1,function(t){n("ioKK")},"data-v-5d7ea066",null);e.default=i.exports},ioKK:function(t,e){}});
+//# sourceMappingURL=2.85ce9360b88ef2461f71.js.map

@@ -1,10 +1,10 @@
 <template>
     <div>
-        <input type="text">
         <div class="query-c">
             查询：
             <Input search placeholder="请输入查询内容" style="width: auto" />
         </div>
+        <br>
         <Table border stripe :columns="columns1" :data="data1"></Table>
         <br>
         <Page :total="100" show-sizer show-elevator/>

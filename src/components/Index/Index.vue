@@ -6,19 +6,20 @@
                 <img src="../../assets/logo.png" alt="logo" class="logo">
                 <span v-show="isShowAsideTitle">后台管理系统</span>
             </div>
-            <Menu theme="dark" width="100%" @on-select="gotoPage">
+            <Menu ref="asideMenu" theme="dark" width="100%" @on-select="gotoPage" 
+            accordion :open-names="openMenus" active-name="Home" @on-open-change="menuChange">
                 <MenuItem name="Home">
                     <Icon size="18" type="md-home" />
                     <span v-show="isShowAsideTitle">主页</span>
                 </MenuItem>
-                <Submenu name="2">
+                <Submenu name="1">
                     <template slot="title">
                         <Icon type="ios-paper"/>
                         <span v-show="isShowAsideTitle">二级菜单</span>
                     </template>
                     <!-- name:路由名称 -->
                     <MenuItem v-show="isShowAsideTitle" name="T1">表格</MenuItem>
-                    <Submenu name="3">
+                    <Submenu name="1-1">
                         <template slot="title">三级菜单</template>
                         <MenuItem name="Msg">查看消息</MenuItem>
                         <MenuItem name="Password">修改密码</MenuItem>
@@ -103,6 +104,8 @@ export default {
     name: 'Index',
     data () {
         return {
+            openMenus: [], // 要打开的菜单名字 name属性
+            menuCache: [], // 缓存已经打开的菜单
             showLoading: false, // 是否显示loading
             hasNewMsg: true, // 是否有新消息
             isShowRouter: true,
@@ -224,17 +227,18 @@ export default {
         },
         // 收缩
         shrinkAside() {
-            document.querySelectorAll('aside>ul>.ivu-menu-opened>.ivu-menu-submenu-title').forEach(e => {
-                e.click()
-            })
-
             this.asideArrowIcons.forEach(e => {
                 e.style.display = 'none'
+            })
+            this.isShowAsideTitle = false
+            this.openMenus = []
+
+            this.$nextTick(() => {
+                this.$refs.asideMenu.updateOpened()
             })
 
             setTimeout(() => {
                 this.asideClassName =''
-                this.isShowAsideTitle = false
                 this.main.style.width = 'calc(100% - 80px)'
             }, 0)
         },
@@ -244,6 +248,10 @@ export default {
                 this.isShowAsideTitle = true
                 this.asideArrowIcons.forEach(e => {
                     e.style.display = 'block'
+                })
+                this.openMenus = this.menuCache
+                this.$nextTick(() => {
+                    this.$refs.asideMenu.updateOpened()
                 })
             }, 200)
             this.asideClassName = 'aside-big'
@@ -291,7 +299,11 @@ export default {
                 }
             } else {
                 // 如果没有标签则跳往首页
-                this.gotoPage('Home')
+                if (name != 'Home') {
+                    this.gotoPage('Home')
+                } else {
+                    this.reloadPage()
+                }
             }
             
         },
@@ -335,6 +347,10 @@ export default {
                     ])
                 }
             })
+        },
+        // 菜单栏改变事件
+        menuChange(data) {
+            this.menuCache = data
         }
     }
 }

@@ -3,14 +3,14 @@
         <div class="container">
             <p class="title">WELCOME</p>
             <div class="input-c">
-                <Input prefix="ios-contact" placeholder="用户名" @on-blur="verifyAccount"/>
+                <Input prefix="ios-contact" v-model="account" placeholder="用户名" clearable @on-blur="verifyAccount"/>
                 <p class="error">{{accountError}}</p>
             </div>
             <div class="input-c">
-                <Input type="password" prefix="md-lock" placeholder="密码" @on-blur="verifyPwd"/>
+                <Input type="password" v-model="pwd" prefix="md-lock" placeholder="密码" clearable @on-blur="verifyPwd"/>
                 <p class="error">{{pwdError}}</p>
             </div>
-            <Button class="submit" type="primary" @click="submit">登陆</Button>
+            <Button :loading="isShowLoading" class="submit" type="primary" @click="submit">登陆</Button>
             <p class="account"><span @click="register">注册账号</span> | <span @click="forgetPwd">忘记密码</span></p>
         </div>
     </div>
@@ -24,7 +24,8 @@ export default {
             account: '',
             pwd: '',
             accountError: '',
-            pwdError: ''
+            pwdError: '',
+            isShowLoading: false,
         }
     },
     computed: {
@@ -33,9 +34,16 @@ export default {
             return 'bg-url' + new Date().getDay()
         }
     },
+    mounted() {
+        document.onkeydown = e => {
+            // 监听回车事件
+            if (e.keyCode == 13) {
+                this.submit()
+            }
+        }
+    },
     methods: {
         verifyAccount(e) {
-            this.account = e.target.value 
             if (this.account !== 'admin') {
                 this.accountError = '账号为admin'
             } else {
@@ -43,7 +51,6 @@ export default {
             }
         },
         verifyPwd(e) {
-            this.pwd = e.target.value
             if (this.pwd !== 'admin') {
                 this.pwdError = '密码为admin'
             } else {
@@ -57,23 +64,19 @@ export default {
             console.log('忘记密码')
         },
         submit() {
-            if (this.account !== '' && this.pwd !== '' 
-                && this.accountError === ''
-                && this.pwdError === ''
-                ) {
-                this.$router.replace('index')
+            if (this.account === 'admin' && this.pwd === 'admin') {
+                this.isShowLoading = true
+                setTimeout(() => {
+                    this.$router.replace('index')
+                }, 100)
             } else {
                 if (this.account !== 'admin') {
                     this.accountError = '账号为admin'
-                } else {
-                    this.accountError = ''
-                }
+                } 
 
                 if (this.pwd !== 'admin') {
                     this.pwdError = '密码为admin'
-                } else {
-                    this.pwdError = ''
-                }
+                } 
             }
         }
     }
@@ -158,6 +161,12 @@ export default {
 }
 .login-vue .account span {
     cursor: pointer;
+}
+.login-vue .ivu-icon {
+    color: #eee;
+}
+.login-vue .ivu-icon-ios-close-circle {
+    color: #777;
 }
 </style>
 
