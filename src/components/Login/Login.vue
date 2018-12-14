@@ -61,7 +61,7 @@ export default {
                 && this.accountError === ''
                 && this.pwdError === ''
                 ) {
-                this.$router.push('index')
+                this.$router.replace('index')
             } else {
                 if (this.account !== 'admin') {
                     this.accountError = '账号为admin'

@@ -40,8 +40,8 @@
                         <div class="refresh-c" @click="reloadPage" title="刷新当前标签页">
                             <Icon type="md-refresh" />
                         </div>
-                        <div class="tag-options">
-                            <Dropdown @on-click="closeTags">
+                        <div class="tag-options" title="关闭标签">
+                            <Dropdown trigger="click" @on-click="closeTags">
                                 <Icon type="ios-options" />
                                 <DropdownMenu slot="list">
                                     <DropdownItem name="1">关闭其他标签</DropdownItem>
@@ -186,7 +186,7 @@ export default {
         },
         // 跳转页面
         gotoPage(name) {
-            this.$router.push({name})
+            this.$router.replace({name})
     
             if (!this.keepAliveData.includes(name)) {
                 // 如果标签超过8个 则将第一个标签删除
@@ -208,7 +208,7 @@ export default {
                     this.gotoPage('UserInfo')
                     break
                 case '3':
-                    this.$router.push({name: 'Login'})
+                    this.$router.replace({name: 'Login'})
                     // 退出登陆
                     break
             }
