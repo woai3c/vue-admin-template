@@ -66,6 +66,12 @@ UI库使用的是iView 有大量的组件可用
 // xxx为你想跳转的子组件name
 this.$parent.gotoPage('xxx')
 ```
+### 路由传参
+```
+this.gotoPage('UserInfo', {
+    id: id,
+})
+```
 
 ## 使用
 #### 下载
