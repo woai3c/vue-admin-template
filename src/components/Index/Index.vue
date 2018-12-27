@@ -187,9 +187,9 @@ export default {
         isActive(name) {
             return this.$route.name === name
         },
-        // 跳转页面
+        // 跳转页面 路由名称和参数
         gotoPage(name) {
-            this.$router.replace({name})
+            this.$router.replace({name, params})
     
             if (!this.keepAliveData.includes(name)) {
                 // 如果标签超过8个 则将第一个标签删除
@@ -281,7 +281,7 @@ export default {
                 }
             })
         },
-        // 关闭标签
+        // 关闭单个标签
         closeTag(i) {
             let name = this.tagsArry[i].name
             this.tagsArry.splice(i, 1)
@@ -307,8 +307,18 @@ export default {
             }
             
         },
-        closeTags(name) {
-            if (name == 1) {
+        // 根据路由名称关闭页面
+        closeName(name) {
+            for (let i = 0, len = this.tagsArry.length; i < len; i++) {
+                if (this.tagsArry[i].name == name) {
+                    this.closeTag(i)
+                    break
+                }
+            }
+        },
+        // 批量关闭标签
+        closeTags(flag) {
+            if (flag == 1) {
                 // 关闭其他标签
                 this.tagsArry = []
                 this.gotoPage(this.$route.name)
