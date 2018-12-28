@@ -71,6 +71,8 @@ this.$parent.gotoPage('xxx')
 this.gotoPage('UserInfo', {
     id: id,
 })
+// 在UserInfo组件里取参
+this.$route.params.id
 ```
 
 ## 使用
