@@ -188,7 +188,7 @@ export default {
             return this.$route.name === name
         },
         // 跳转页面 路由名称和参数
-        gotoPage(name) {
+        gotoPage(name, params) {
             this.$router.replace({name, params})
     
             if (!this.keepAliveData.includes(name)) {

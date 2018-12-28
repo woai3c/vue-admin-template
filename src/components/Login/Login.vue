@@ -1,5 +1,5 @@
 <template>
-    <div class="login-vue" :class="bgUrl">
+    <div class="login-vue" :style="bg">
         <div class="container">
             <p class="title">WELCOME</p>
             <div class="input-c">
@@ -26,13 +26,11 @@ export default {
             accountError: '',
             pwdError: '',
             isShowLoading: false,
+            bg: {}
         }
     },
-    computed: {
-        bgUrl() {
-            // 周一至周日 显示不同的背景
-            return 'bg-url' + new Date().getDay()
-        }
+    created() {
+        this.bg.backgroundImage = 'url(' + require('../../assets/bg0' + new Date().getDay() + '.jpg') + ')'
     },
     mounted() {
         document.onkeydown = e => {
@@ -90,27 +88,6 @@ export default {
     justify-content: center;
     align-items: center;
     color: #fff;
-}
-.bg-url0 {
-    background-image: url(../../assets/bg00.jpg)
-}
-.bg-url1 {
-    background-image: url(../../assets/bg01.jpg)
-}
-.bg-url2 {
-    background-image: url(../../assets/bg02.jpg)
-}
-.bg-url3 {
-    background-image: url(../../assets/bg03.jpg)
-}
-.bg-url4 {
-    background-image: url(../../assets/bg04.jpg)
-}
-.bg-url5 {
-    background-image: url(../../assets/bg05.jpg)
-}
-.bg-url6 {
-    background-image: url(../../assets/bg06.jpg)
 }
 .login-vue .container {
     background: rgba(255, 255, 255, .5);
