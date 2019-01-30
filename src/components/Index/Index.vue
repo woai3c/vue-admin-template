@@ -84,6 +84,8 @@
                     </li>
                 </ul>
             </div>
+            <!-- 页面主体和头部之间放一个遮罩层分隔开 -->
+            <div class="mask"></div>
             <!-- 页面主体 -->
             <div class="main-content">
                 <div class="view-c">
@@ -523,8 +525,8 @@ a {
     overflow: auto;
     height: 100%;
     width: 100%;
-    background: rgba(230,230,230,.5);
-    padding: 15px;
+    background: #eee;
+    padding: 10px 12px;
 }
 .view-c {
     position: relative;
@@ -546,5 +548,13 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.mask {
+    position: fixed;
+    background: #eee;
+    height: 10px;
+    width: 100%;
+    top: 85px;
+    z-index: 10;
 }
 </style>
