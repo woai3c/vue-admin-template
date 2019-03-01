@@ -8,7 +8,30 @@
             </div>
             <Menu ref="asideMenu" theme="dark" width="100%" @on-select="gotoPage" 
             accordion :open-names="openMenus" active-name="Home" @on-open-change="menuChange">
-                <MenuItem name="Home">
+                <!-- 动态菜单 -->
+                <div v-for="(item, index) in menuItems" :key="index">
+                    <Submenu v-if="item.children" :name="index">
+                        <template slot="title">
+                            <Icon :size="item.size" :type="item.type"/>
+                            <span v-show="isShowAsideTitle">{{item.text}}</span>
+                        </template>
+                        <div v-for="(subItem, i) in item.children" :key="index + i">
+                            <Submenu v-if="subItem.children" :name="index + '-' + i">
+                                <template slot="title">{{subItem.text}}</template>
+                                <MenuItem v-for="(threeItem, k) in subItem.children" :name="threeItem.name" :key="index + i + k">
+                                    {{threeItem.text}}
+                                </MenuItem>
+                            </Submenu>
+                            <MenuItem v-else v-show="isShowAsideTitle" :name="subItem.name">{{subItem.text}}</MenuItem>
+                        </div>
+                    </Submenu>
+                    <MenuItem v-else :name="item.name">
+                        <Icon :size="item.size" :type="item.type" />
+                        <span v-show="isShowAsideTitle">{{item.text}}</span>
+                    </MenuItem>
+                </div>
+                <!-- 静态菜单 -->
+                <!-- <MenuItem name="Home">
                     <Icon size="18" type="md-home" />
                     <span v-show="isShowAsideTitle">主页</span>
                 </MenuItem>
@@ -17,7 +40,6 @@
                         <Icon type="ios-paper"/>
                         <span v-show="isShowAsideTitle">二级菜单</span>
                     </template>
-                    <!-- name:路由名称 -->
                     <MenuItem v-show="isShowAsideTitle" name="T1">表格</MenuItem>
                     <Submenu name="1-1">
                         <template slot="title">三级菜单</template>
@@ -25,7 +47,7 @@
                         <MenuItem name="Password">修改密码</MenuItem>
                         <MenuItem name="UserInfo">基本资料</MenuItem>
                     </Submenu>
-                </Submenu>
+                </Submenu> -->
             </Menu>
         </aside>
 
@@ -106,6 +128,42 @@ export default {
     name: 'Index',
     data () {
         return {
+            // 左侧菜单栏数据
+            menuItems: [
+                {
+                    name: 'Home', // 要跳转的路由名称 不是路径
+                    size: 18, // icon大小
+                    type: 'md-home', // icon类型
+                    text: '主页' // 文本内容
+                },
+                {
+                    text: '二级菜单',
+                    type: 'ios-paper',
+                    children: [
+                        {
+                            name: 'T1',
+                            text: '表格'
+                        },
+                        {
+                            text: '三级菜单',
+                            children: [
+                                {
+                                    name: 'Msg',
+                                    text: '查看消息'
+                                },
+                                {
+                                    name: 'Password',
+                                    text: '修改密码'
+                                },
+                                {
+                                    name: 'UserInfo',
+                                    text: '基本资料'
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
             openMenus: [], // 要打开的菜单名字 name属性
             menuCache: [], // 缓存已经打开的菜单
             showLoading: false, // 是否显示loading
