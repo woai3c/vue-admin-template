@@ -70,6 +70,9 @@ menuItems: [
 * 用户头像
 * 基本资料
 
+#### 动态菜单栏
+根据数据动态生成菜单
+
 #### 其它
 利用axios拦截器 实现了ajax请求前展示loading 请求结束关闭loading
 
