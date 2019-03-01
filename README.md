@@ -74,7 +74,7 @@ menuItems: [
 * 根据数据动态生成菜单
 
 #### 其它
-* 利用axios拦截器 实现了ajax请求前展示loading 请求结束关闭loading
+* 利用axios拦截器 实现了`ajax`请求前展示`loading` 请求结束关闭`loading`
 
 ## 注意
 * 源码可见 并且添加了必要的注释 可以自行更改
