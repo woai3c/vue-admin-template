@@ -80,7 +80,7 @@ menuItems: [
 * 源码可见 并且添加了必要的注释 可以自行更改
 
 为了实现标签栏切换页面 有一个要求必须是要遵守的：<br>
-Index.vue的data数据里有一个nameToTitle属性
+`Index.vue`的`data`数据里有一个`nameToTitle`属性
 ```
 nameToTitle: {
     Table: '表格',
@@ -90,8 +90,8 @@ nameToTitle: {
     Home: '首页'
 }
 ```
-其中key是组件的名称 值是要展示在标签栏上的标题 其中组件的名称和路由的名称必须要一一对应<br>
-假如你有一个组件是Home.vue name为Home 在路由的index.js它的name也必须是Home
+其中的键名是组件的名称 值是要展示在标签栏上的标题 其中组件的名称和路由的名称必须要一一对应<br>
+假如你有一个组件是`Home.vue` `name`为`Home` 在路由的`index.js`它的`name`也必须是`Home`
 ```
 const Home = () => import('@/components/Home/Home')
 export default new Router({
@@ -106,7 +106,7 @@ export default new Router({
 ```
 
 市面上有大量的vue后台管理系统模板 但是功能都太丰富了 而且有很多组件用不上 所以写了这么一个最基础的 只有必要功能的模板
-UI库使用的是iView 有大量的组件可用 
+UI库使用的是`iView` 有大量的组件可用 
 
 ### 子组件跳转到子组件
 ```
