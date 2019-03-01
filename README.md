@@ -71,13 +71,13 @@ menuItems: [
 * 基本资料
 
 #### 动态菜单栏
-根据数据动态生成菜单
+* 根据数据动态生成菜单
 
 #### 其它
-利用axios拦截器 实现了ajax请求前展示loading 请求结束关闭loading
+* 利用axios拦截器 实现了ajax请求前展示loading 请求结束关闭loading
 
 ## 注意
-源码可见 并且添加了必要的注释 可以自行更改
+* 源码可见 并且添加了必要的注释 可以自行更改
 
 为了实现标签栏切换页面 有一个要求必须是要遵守的：<br>
 Index.vue的data数据里有一个nameToTitle属性
