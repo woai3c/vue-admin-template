@@ -5,7 +5,45 @@ vue轻量级后台管理系统基础模板<br>
 ## 更新
 * 2019.3.1 更新<br>
 增加动态菜单栏功能，当然原来静态菜单栏也是支持的，向后兼容<br>
-具体使用方法请查看源码示例
+数据格式
+```js
+// 左侧菜单栏数据
+menuItems: [
+    {
+        name: 'Home', // 要跳转的路由名称 不是路径
+        size: 18, // icon大小
+        type: 'md-home', // icon类型
+        text: '主页' // 文本内容
+    },
+    {
+        text: '二级菜单',
+        type: 'ios-paper',
+        children: [
+            {
+                name: 'T1',
+                text: '表格'
+            },
+            {
+                text: '三级菜单',
+                children: [
+                    {
+                        name: 'Msg',
+                        text: '查看消息'
+                    },
+                    {
+                        name: 'Password',
+                        text: '修改密码'
+                    },
+                    {
+                        name: 'UserInfo',
+                        text: '基本资料'
+                    }
+                ]
+            }
+        ]
+    }
+]
+```
 ## 相关依赖
 * [vue-router](https://router.vuejs.org/zh/)
 * [iview](https://www.iviewui.com/docs/guide/install)
