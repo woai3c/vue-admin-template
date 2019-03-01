@@ -1,6 +1,11 @@
 # vue-admin-template
 vue轻量级后台管理系统基础模板<br>
 [在线预览](https://woai3c.github.io)
+
+## 更新
+* 2019.3.1 更新<br>
+增加动态菜单栏功能，当然原来静态菜单栏也是支持的，向后兼容<br>
+具体使用方法请查看源码示例
 ## 相关依赖
 * [vue-router](https://router.vuejs.org/zh/)
 * [iview](https://www.iviewui.com/docs/guide/install)
