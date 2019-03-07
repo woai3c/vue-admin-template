@@ -104,7 +104,7 @@ export default new Router({
     ]
 })
 ```
-`Index.vue`一般情况只需要关注`nameToTitle`和`menuItems`，其他都不需要改动的
+`Index.vue`一般情况只需要关注`nameToTitle`和`menuItems`，其他都是不需要改动的
 
 市面上有大量的vue后台管理系统模板 但是功能都太丰富了 而且有很多组件用不上 所以写了这么一个最基础的 只有必要功能的模板
 UI库使用的是`iView` 有大量的组件可用 
