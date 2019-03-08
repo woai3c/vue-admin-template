@@ -3,6 +3,10 @@ vue轻量级后台管理系统基础模板<br>
 [在线预览](https://woai3c.github.io)
 
 ## 更新
+* 2019.3.8 更新<br>
+增加面包屑功能，用于展示当前页面的访问路径<br>
+增加权限控制功能，如果未登陆，所有页面都重定向到登陆页
+
 * 2019.3.1 更新<br>
 增加动态菜单栏功能，当然，原来静态菜单栏也是支持的，向后兼容。<br>
 `icon`使用的是`iview`组件的`icon`组件。<br>
@@ -21,23 +25,28 @@ menuItems: [
         type: 'ios-paper',
         children: [
             {
+                type: 'ios-grid',
                 name: 'T1',
                 text: '表格'
             },
             {
                 text: '三级菜单',
+                type: 'ios-paper',
                 children: [
                     {
+                        type: 'ios-notifications-outline',
                         name: 'Msg',
                         text: '查看消息'
                     },
                     {
+                        type: 'md-lock',
                         name: 'Password',
                         text: '修改密码'
                     },
                     {
+                        type: 'md-person',
                         name: 'UserInfo',
-                        text: '基本资料'
+                        text: '基本资料',
                     }
                 ]
             }
@@ -73,38 +82,17 @@ menuItems: [
 #### 动态菜单栏
 * 根据数据动态生成菜单
 
+#### 面包屑
+* 展示当前页面的路径
+
 #### 其它
 * 利用`axios`拦截器 实现了`ajax`请求前展示`loading` 请求结束关闭`loading`
 
 ## 注意
 * 源码可见 并且添加了必要的注释 可以自行更改
 
-为了实现标签栏切换页面 有一个要求必须是要遵守的：<br>
-`Index.vue`的`data`数据里有一个`nameToTitle`属性
-```
-nameToTitle: {
-    Table: '表格',
-    Password: '修改密码',
-    UserInfo: '基本资料',
-    Msg: '查看消息',
-    Home: '首页'
-}
-```
-其中的键名是组件的名称 值是要展示在标签栏上的标题 其中组件的名称和路由的名称必须要一一对应<br>
-假如你有一个组件是`Home.vue` `name`为`Home` 在路由的`index.js`它的`name`也必须是`Home`
-```
-const Home = () => import('@/components/Home/Home')
-export default new Router({
-    routes: [
-        {
-            path: '/home',
-            name: 'Home',
-            component: Home,
-        }
-    ]
-})
-```
-`Index.vue`一般情况只需要关注`nameToTitle`和`menuItems`，其他都是不需要改动的
+
+`Index.vue`一般情况只需要关注`menuItems`
 
 市面上有大量的vue后台管理系统模板 但是功能都太丰富了 而且有很多组件用不上 所以写了这么一个最基础的 只有必要功能的模板
 UI库使用的是`iView` 有大量的组件可用 

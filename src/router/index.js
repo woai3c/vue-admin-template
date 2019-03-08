@@ -3,14 +3,14 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-const Login = () => import('@/components/Login/Login')
-const Index = () => import('@/components/Index/Index')
+const Login = () => import('@/components/Login')
+const Index = () => import('@/components/Index')
 
-const Home = () => import('@/components/Home/Home')
-const T1 = () => import('@/components/T1/T1')
-const Password = () => import('@/components/Password/Password')
-const Msg = () => import('@/components/Msg/Msg')
-const UserInfo = () => import('@/components/UserInfo/UserInfo')
+const Home = () => import('@/components/Home')
+const T1 = () => import('@/components/T1')
+const Password = () => import('@/components/Password')
+const Msg = () => import('@/components/Msg')
+const UserInfo = () => import('@/components/UserInfo')
 
 
 // 首页下的子组件

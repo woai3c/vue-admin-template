@@ -64,6 +64,11 @@ export default {
         submit() {
             if (this.account === 'admin' && this.pwd === 'admin') {
                 this.isShowLoading = true
+                // 登陆成功 设置用户信息
+                this.$store.commit('setUser', {
+                    name: '小明',
+                    img: require('../../assets/user.jpg')
+                })
                 setTimeout(() => {
                     this.$router.replace('index')
                 }, 100)

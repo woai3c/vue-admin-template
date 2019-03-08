@@ -17,12 +17,19 @@
                         </template>
                         <div v-for="(subItem, i) in item.children" :key="index + i">
                             <Submenu v-if="subItem.children" :name="index + '-' + i">
-                                <template slot="title">{{subItem.text}}</template>
-                                <MenuItem v-for="(threeItem, k) in subItem.children" :name="threeItem.name" :key="index + i + k">
-                                    {{threeItem.text}}
+                                <template slot="title">
+                                    <Icon :size="subItem.size" :type="subItem.type"/>
+                                    <span v-show="isShowAsideTitle">{{subItem.text}}</span>
+                                </template>
+                                <MenuItem class="menu-level-3" v-for="(threeItem, k) in subItem.children" :name="threeItem.name" :key="index + i + k">
+                                    <Icon :size="threeItem.size" :type="threeItem.type"/>
+                                    <span v-show="isShowAsideTitle">{{threeItem.text}}</span>
                                 </MenuItem>
                             </Submenu>
-                            <MenuItem v-else v-show="isShowAsideTitle" :name="subItem.name">{{subItem.text}}</MenuItem>
+                            <MenuItem v-else v-show="isShowAsideTitle" :name="subItem.name">
+                                <Icon :size="subItem.size" :type="subItem.type"/>
+                                <span v-show="isShowAsideTitle">{{subItem.text}}</span>
+                            </MenuItem>
                         </div>
                     </Submenu>
                     <MenuItem v-else :name="item.name">
@@ -30,24 +37,6 @@
                         <span v-show="isShowAsideTitle">{{item.text}}</span>
                     </MenuItem>
                 </div>
-                <!-- 静态菜单 -->
-                <!-- <MenuItem name="Home">
-                    <Icon size="18" type="md-home" />
-                    <span v-show="isShowAsideTitle">主页</span>
-                </MenuItem>
-                <Submenu name="1">
-                    <template slot="title">
-                        <Icon type="ios-paper"/>
-                        <span v-show="isShowAsideTitle">二级菜单</span>
-                    </template>
-                    <MenuItem v-show="isShowAsideTitle" name="T1">表格</MenuItem>
-                    <Submenu name="1-1">
-                        <template slot="title">三级菜单</template>
-                        <MenuItem name="Msg">查看消息</MenuItem>
-                        <MenuItem name="Password">修改密码</MenuItem>
-                        <MenuItem name="UserInfo">基本资料</MenuItem>
-                    </Submenu>
-                </Submenu> -->
             </Menu>
         </aside>
 
@@ -60,6 +49,43 @@
                         <div class="pointer" @click="isShrinkAside" title="收缩/展开">
                             <Icon type="ios-apps" />
                         </div>
+                        <!-- 面包屑功能 如不需要 注释此行代码即可 -->
+                        <p class="crumbs">{{crumbs}}</p>
+                    </div>
+                    <div class="h-right">
+                        <div class="notice-c" @click="info" title="查看新消息">
+                            <div :class="{newMsg: hasNewMsg}"></div>
+                            <Icon type="ios-notifications-outline" />
+                        </div>
+                        <div class="user-img-c">
+                            <img :src="userImg">
+                        </div>
+                        <Dropdown trigger="click" @on-click="userOperate" @on-visible-change="showArrow">
+                            <div class="pointer">
+                                <span>{{userName}}</span>
+                                <Icon v-show="arrowDown" type="md-arrow-dropdown"/>
+                                <Icon v-show="arrowUp" type="md-arrow-dropup"/>
+                            </div>
+                            <DropdownMenu slot="list">
+                                <!-- name标识符 -->
+                                <DropdownItem name="1">修改密码</DropdownItem>
+                                <DropdownItem name="2">基本资料</DropdownItem>
+                                <DropdownItem divided  name="3">退出登陆</DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                    </div>
+                </header>
+                <div class="div-tags">
+                    <!-- 标签栏 -->
+                    <ul class="ul-c">
+                        <li v-for="(item, index) in tagsArry" :class="{active: isActive(item.name)}" @click="activeTag(index)">
+                            <a class="li-a">
+                                {{item.text}}
+                            </a>
+                            <Icon size="16" @click="closeTag(index)" type="md-close" />
+                        </li>
+                    </ul>
+                    <div class="div-icons">
                         <div class="refresh-c" @click="reloadPage" title="刷新当前标签页">
                             <Icon type="md-refresh" />
                         </div>
@@ -73,38 +99,7 @@
                             </Dropdown>
                         </div>
                     </div>
-                    <div class="h-right">
-                        <div class="notice-c" @click="info" title="查看新消息">
-                            <div :class="{newMsg: hasNewMsg}"></div>
-                            <Icon type="ios-notifications-outline" />
-                        </div>
-                        <div class="user-img-c">
-                            <img :src="userImg">
-                        </div>
-                        <Dropdown trigger="click" @on-click="userOperate" @on-visible-change="showArrow">
-                            <div class="pointer">
-                                <span>{{user}}</span>
-                                <Icon v-show="arrowDown" type="md-arrow-dropdown"/>
-                                <Icon v-show="arrowUp" type="md-arrow-dropup"/>
-                            </div>
-                            <DropdownMenu slot="list">
-                                <!-- name标识符 -->
-                                <DropdownItem name="1">修改密码</DropdownItem>
-                                <DropdownItem name="2">基本资料</DropdownItem>
-                                <DropdownItem divided  name="3">退出登陆</DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
-                    </div>
-                </header>
-                <!-- 标签栏 -->
-                <ul class="ul-c">
-                    <li v-for="(item, index) in tagsArry" :class="{active: isActive(item.name)}" @click="activeTag(index)">
-                        <a class="li-a">
-                            {{item.text}}
-                        </a>
-                        <Icon size="16" @click="closeTag(index)" type="md-close" />
-                    </li>
-                </ul>
+                </div>
             </div>
             <!-- 页面主体和头部之间放一个遮罩层分隔开 -->
             <div class="mask"></div>
@@ -112,6 +107,7 @@
             <div class="main-content">
                 <div class="view-c">
                     <keep-alive :include="keepAliveData">
+                        <!-- 子页面 -->
                         <router-view v-if="isShowRouter"/>
                     </keep-alive>
                     <div class="loading-c" v-show="showLoading">
@@ -128,6 +124,8 @@ export default {
     name: 'Index',
     data () {
         return {
+            // 用于储存页面路径
+            paths: {},
             // 左侧菜单栏数据
             menuItems: [
                 {
@@ -141,23 +139,28 @@ export default {
                     type: 'ios-paper',
                     children: [
                         {
+                            type: 'ios-grid',
                             name: 'T1',
                             text: '表格'
                         },
                         {
                             text: '三级菜单',
+                            type: 'ios-paper',
                             children: [
                                 {
+                                    type: 'ios-notifications-outline',
                                     name: 'Msg',
                                     text: '查看消息'
                                 },
                                 {
+                                    type: 'md-lock',
                                     name: 'Password',
                                     text: '修改密码'
                                 },
                                 {
+                                    type: 'md-person',
                                     name: 'UserInfo',
-                                    text: '基本资料'
+                                    text: '基本资料',
                                 }
                             ]
                         }
@@ -170,26 +173,18 @@ export default {
             hasNewMsg: true, // 是否有新消息
             isShowRouter: true,
             msgNum: '10', // 新消息条数
-            user: '小明', // 用户名
-            userImg: require('../../assets/user.jpg'), // 用户图片
             // 标签栏         标签标题     路由名称
             // 数据格式 {text: '首页', name: 'Foo'}
-            tagsArry: [{text: '首页', name: 'Home'}], 
+            // 用于缓存打开的路由 在标签栏上展示
+            tagsArry: [], 
             arrowUp: false, // 用户详情向上箭头
             arrowDown: true, // 用户详情向下箭头
             isShowAsideTitle: true, // 是否展示侧边栏内容
             main: null, // 页面主要内容区域
             asideClassName: 'aside-big', // 控制侧边栏宽度变化
             asideArrowIcons: [], // 缓存侧边栏箭头图标 收缩时用
-            // 由于iView的导航菜单比较坑 只能设定一个name参数
-            // 所以需要在这定义组件名称和标签栏标题的映射表 有多少个页面就有多少个映射条数
-            nameToTitle: {
-                T1: '表格',
-                Password: '修改密码',
-                UserInfo: '基本资料',
-                Msg: '查看消息',
-                Home: '首页'
-            }
+            // 面包屑
+            crumbs: '主页'
         }
     },
     created() {
@@ -240,6 +235,23 @@ export default {
         // 需要缓存的路由
         keepAliveData() {
             return this.tagsArry.map(item => item.name)
+        },
+        // 由于iView的导航菜单比较坑 只能设定一个name参数
+        // 所以需要在这定义组件名称和标签栏标题的映射表 有多少个页面就有多少个映射条数
+        nameToTitle() {
+            const obj = {}
+            this.menuItems.forEach(e => {
+                this.processNameToTitle(obj, e)
+            })
+            return obj
+        },
+        // 用户名
+        userName() {
+            return this.$store.state.user.name
+        },
+        // 用户图片
+        userImg() {
+            return this.$store.state.user.img
         }
     },
     methods: {
@@ -249,6 +261,7 @@ export default {
         },
         // 跳转页面 路由名称和参数
         gotoPage(name, params) {
+            this.crumbs = this.paths[name]
             this.$router.replace({name, params})
     
             if (!this.keepAliveData.includes(name)) {
@@ -271,8 +284,12 @@ export default {
                     this.gotoPage('UserInfo')
                     break
                 case '3':
+                    // 退出登陆 清除用户资料
+                    this.$store.commit('setUser', {
+                        name: '',
+                        img: ''
+                    })
                     this.$router.replace({name: 'Login'})
-                    // 退出登陆
                     break
             }
         },
@@ -421,6 +438,17 @@ export default {
         // 菜单栏改变事件
         menuChange(data) {
             this.menuCache = data
+        },
+        processNameToTitle(obj, data, text) {
+            if (data.name) {
+                obj[data.name] = data.text
+                this.paths[data.name] = text? `${text} / ${data.text}` : data.text
+            }
+            if (data.children) {
+                data.children.forEach(e => {
+                    this.processNameToTitle(obj, e, text? `${text} / ${data.text}` : data.text)
+                })
+            }
         }
     }
 }
@@ -483,7 +511,8 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 40px;
+    padding-right: 40px;
+    padding-left: 10px;
     font-size: 14px;
 }
 header .ivu-icon {
@@ -530,6 +559,20 @@ header .ivu-icon {
     position: relative;
 }
 
+.div-tags {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.div-icons {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background: #fff;
+    height: 34px;
+    width: 160px;
+    font-size: 18px;
+}
 /* 标签栏 */
 .ul-c {
     height: 34px;
@@ -540,6 +583,7 @@ header .ivu-icon {
     align-items: center;
     padding: 0 10px;
     overflow: hidden;
+    width: calc(100% - 160px);
 }
 .ul-c li {
     border-radius: 3px;
@@ -614,5 +658,14 @@ a {
     width: 100%;
     top: 85px;
     z-index: 10;
+}
+
+.crumbs {
+    margin-left: 10px;
+    color: #97a8be;
+    cursor: default;
+}
+.menu-level-3 .ivu-icon {
+    font-size: 18px;
 }
 </style>
