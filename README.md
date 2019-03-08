@@ -16,8 +16,8 @@ vue轻量级后台管理系统基础模板<br>
 menuItems: [
     {
         name: 'Home', // 要跳转的路由名称 不是路径
-        size: 18, // icon大小
-        type: 'md-home', // icon类型
+        size: 18, // icon大小 非必填
+        type: 'md-home', // icon类型 非必填
         text: '主页' // 文本内容
     },
     {
@@ -58,6 +58,7 @@ menuItems: [
 * [vue-router](https://router.vuejs.org/zh/)
 * [iview](https://www.iviewui.com/docs/guide/install)
 * [axios](https://www.kancloud.cn/yunye/axios/234845)
+* [vuex](https://vuex.vuejs.org/zh/)
 
 ## 功能
 
@@ -84,6 +85,9 @@ menuItems: [
 
 #### 面包屑
 * 展示当前页面的路径
+
+#### 权限控制
+* 如果在未登陆的情况下访问指定页面 将会重定向到登陆页
 
 #### 其它
 * 利用`axios`拦截器 实现了`ajax`请求前展示`loading` 请求结束关闭`loading`
