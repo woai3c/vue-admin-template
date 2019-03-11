@@ -199,7 +199,6 @@ export default {
             // 对请求错误做些什么
             return Promise.reject(error)
         })
-
         // 添加响应拦截器
         this.$axios.interceptors.response.use(response => {
             this.showLoading = false
@@ -210,8 +209,6 @@ export default {
             // 对响应错误做点什么
             return Promise.reject(error)
         })
-
-
         // 如果直接跳转到指定页面 没有对应的标签页 则添加
         const name = this.$route.name
         if (!this.keepAliveData.includes(name)) {
@@ -309,11 +306,9 @@ export default {
             })
             this.isShowAsideTitle = false
             this.openMenus = []
-
             this.$nextTick(() => {
                 this.$refs.asideMenu.updateOpened()
             })
-
             setTimeout(() => {
                 this.asideClassName =''
                 this.main.style.width = 'calc(100% - 80px)'
@@ -338,7 +333,6 @@ export default {
         reloadPage() {
             let name = this.$route.name
             let index = this.keepAliveData.indexOf(name)
-
             this.$nextTick(() => {
                 if (this.tagsArry.length) {
                     this.isShowRouter = false
@@ -362,7 +356,6 @@ export default {
         closeTag(i) {
             let name = this.tagsArry[i].name
             this.tagsArry.splice(i, 1)
-
             event.stopPropagation()
             // 如果关闭的是当前标签 则激活前一个标签
             // 如果关闭的是第一个标签 则激活后一个标签
@@ -461,8 +454,6 @@ export default {
     justify-content: space-between;
     color: #666;
 }
-
-
 /* 侧边栏 */
 aside {
     min-width: 80px;
@@ -486,8 +477,6 @@ aside {
 .aside-big {
     min-width: 220px;
 }
-
-
 /* 主体页面 */
 .sec-right {
     height: 100%;
@@ -496,8 +485,6 @@ aside {
     flex-direction: column;
     transition: width .5s;
 }
-
-
 /* 主体页面头部 */
 .top-c {
     background: rgba(230,230,230,.5);
@@ -558,7 +545,6 @@ header .ivu-icon {
     cursor: pointer;
     position: relative;
 }
-
 .div-tags {
     display: flex;
     align-items: center;
@@ -620,8 +606,6 @@ a {
 .active .ivu-icon {
     color: #fff;
 }
-
-
 /* 主要内容区域 */
 .main-content {
     overflow: auto;
@@ -638,7 +622,6 @@ a {
 .pointer {
     cursor: pointer;
 }
-
 /* loading */
 .loading-c {
     top: 0;
@@ -659,7 +642,6 @@ a {
     top: 85px;
     z-index: 10;
 }
-
 .crumbs {
     margin-left: 10px;
     color: #97a8be;
