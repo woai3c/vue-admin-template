@@ -1,6 +1,6 @@
 import router from './router'
 import store from './store'
-
+// 这只是简单示范 建议结合cookie或token使用
 router.beforeEach((to, from, next) => {
     if (to.name == 'Login') {
         next()

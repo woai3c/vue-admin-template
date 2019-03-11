@@ -7,7 +7,7 @@
                 <span v-show="isShowAsideTitle">后台管理系统</span>
             </div>
             <Menu ref="asideMenu" theme="dark" width="100%" @on-select="gotoPage" 
-            accordion :open-names="openMenus" active-name="Home" @on-open-change="menuChange">
+            accordion :open-names="openMenus" :active-name="currentPage" @on-open-change="menuChange">
                 <!-- 动态菜单 -->
                 <div v-for="(item, index) in menuItems" :key="index">
                     <Submenu v-if="item.children" :name="index">
@@ -126,6 +126,8 @@ export default {
         return {
             // 用于储存页面路径
             paths: {},
+            // 当前显示页面
+            currentPage: 'Home',
             // 左侧菜单栏数据
             menuItems: [
                 {
@@ -209,13 +211,14 @@ export default {
             // 对响应错误做点什么
             return Promise.reject(error)
         })
+    },
+    mounted() {
         // 如果直接跳转到指定页面 没有对应的标签页 则添加
         const name = this.$route.name
         if (!this.keepAliveData.includes(name)) {
             this.tagsArry.push({name, text: this.nameToTitle[name]})
         }
-    },
-    mounted() {
+        
         this.main = document.querySelector('.sec-right')
         this.asideArrowIcons = document.querySelectorAll('aside .ivu-icon-ios-arrow-down')
         let w = document.documentElement.clientWidth || document.body.clientWidth
@@ -258,6 +261,7 @@ export default {
         },
         // 跳转页面 路由名称和参数
         gotoPage(name, params) {
+            this.currentPage = name
             this.crumbs = this.paths[name]
             this.$router.replace({name, params})
     
