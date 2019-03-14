@@ -1,0 +1,2 @@
+webpackJsonp([3],{EsYE:function(t,e){},yw6p:function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r={render:function(){this.$createElement;this._self._c;return this._m(0)},staticRenderFns:[function(){var t=this.$createElement,e=this._self._c||t;return e("div",[this._v("\n    基本资料\n    "),e("input",{attrs:{type:"text"}})])}]};var s=n("VU/8")({data:function(){return{}}},r,!1,function(t){n("EsYE")},"data-v-5979e4f9",null);e.default=s.exports}});
+//# sourceMappingURL=3.a2c6fafd9aa85bdafae7.js.map
