@@ -13,7 +13,6 @@
 
 <script>
 export default {
-    name: 'T1',
     data() {
         return {
             columns1: [

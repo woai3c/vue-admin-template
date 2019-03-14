@@ -3,20 +3,19 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-const Login = () => import('@/components/Login')
-const Index = () => import('@/components/Index')
-
-const Home = () => import('@/components/Home')
-const T1 = () => import('@/components/T1')
-const Password = () => import('@/components/Password')
-const Msg = () => import('@/components/Msg')
-const UserInfo = () => import('@/components/UserInfo')
-
+const Index = () => import('@/components/common')
+const Login = () => import('@/components/Login.vue')
+const Home = () => import('@/components/Home.vue')
+const T1 = () => import('@/components/T1.vue')
+const Password = () => import('@/components/Password.vue')
+const Msg = () => import('@/components/Msg.vue')
+const UserInfo = () => import('@/components/UserInfo.vue')
+const Error404 = () => import('@/components/404.vue')
 
 // 首页下的子组件
 const children = [
     {
-        path: '',
+        path: 'home',
         name: 'Home',
         component: Home 
     },
@@ -39,21 +38,27 @@ const children = [
         path: 'userinfo',
         name: 'UserInfo',
         component: UserInfo
+    },
+    {
+        path: '404',
+        name: '404',
+        component: Error404
     }
 ]
 
 export default new Router({
     routes: [
-        {path: '/', redirect: '/login'},
+        {path: '/', redirect: '/home'},
+        {path: '*', redirect: '/404'},
         {
             path: '/login',
             name: 'Login',
             component: Login
         },
         {
-            path: '/index',
+            path: '/',
             component: Index,
             children,
         }
-    ]
+    ]   
 })

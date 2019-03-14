@@ -18,7 +18,6 @@
 
 <script>
 export default {
-    name: 'Login',
     data() {
         return {
             account: '',
@@ -30,7 +29,7 @@ export default {
         }
     },
     created() {
-        this.bg.backgroundImage = 'url(' + require('../../assets/bg0' + new Date().getDay() + '.jpg') + ')'
+        this.bg.backgroundImage = 'url(' + require('../assets/bg0' + new Date().getDay() + '.jpg') + ')'
     },
     mounted() {
         document.onkeydown = e => {
@@ -67,10 +66,10 @@ export default {
                 // 登陆成功 设置用户信息
                 this.$store.commit('setUser', {
                     name: '小明',
-                    img: require('../../assets/user.jpg')
+                    img: require('../assets/user.jpg')
                 })
                 setTimeout(() => {
-                    this.$router.replace('index')
+                    this.$router.replace('/')
                 }, 100)
             } else {
                 if (this.account !== 'admin') {

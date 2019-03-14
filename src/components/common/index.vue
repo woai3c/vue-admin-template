@@ -2,10 +2,12 @@
     <div class="index-vue">
         <!-- 侧边栏 -->
         <aside :class="asideClassName">
+            <!-- logo -->
             <div class="logo-c">
                 <img src="../../assets/logo.png" alt="logo" class="logo">
                 <span v-show="isShowAsideTitle">后台管理系统</span>
             </div>
+            <!-- 菜单栏 -->
             <Menu ref="asideMenu" theme="dark" width="100%" @on-select="gotoPage" 
             accordion :open-names="openMenus" :active-name="currentPage" @on-open-change="menuChange">
                 <!-- 动态菜单 -->
@@ -49,17 +51,20 @@
                         <div class="pointer" @click="isShrinkAside" title="收缩/展开">
                             <Icon type="ios-apps" />
                         </div>
-                        <!-- 面包屑功能 如不需要 注释此行代码即可 -->
+                        <!-- 面包屑功能 -->
                         <p class="crumbs">{{crumbs}}</p>
                     </div>
                     <div class="h-right">
+                        <!-- 消息 -->
                         <div class="notice-c" @click="info" title="查看新消息">
                             <div :class="{newMsg: hasNewMsg}"></div>
                             <Icon type="ios-notifications-outline" />
                         </div>
+                        <!-- 用户头像 -->
                         <div class="user-img-c">
                             <img :src="userImg">
                         </div>
+                        <!-- 下拉菜单 -->
                         <Dropdown trigger="click" @on-click="userOperate" @on-visible-change="showArrow">
                             <div class="pointer">
                                 <span>{{userName}}</span>
@@ -75,8 +80,9 @@
                         </Dropdown>
                     </div>
                 </header>
+
+                <!-- 标签栏 -->
                 <div class="div-tags">
-                    <!-- 标签栏 -->
                     <ul class="ul-c">
                         <li v-for="(item, index) in tagsArry" :class="{active: isActive(item.name)}" @click="activeTag(index)">
                             <a class="li-a">
@@ -85,6 +91,7 @@
                             <Icon size="16" @click="closeTag(index)" type="md-close" />
                         </li>
                     </ul>
+                    <!-- 标签栏相关功能 -->
                     <div class="div-icons">
                         <div class="refresh-c" @click="reloadPage" title="刷新当前标签页">
                             <Icon type="md-refresh" />
@@ -121,7 +128,6 @@
 
 <script>
 export default {
-    name: 'Index',
     data () {
         return {
             // 用于储存页面路径
@@ -176,9 +182,9 @@ export default {
             isShowRouter: true,
             msgNum: '10', // 新消息条数
             // 标签栏         标签标题     路由名称
-            // 数据格式 {text: '首页', name: 'Foo'}
+            // 数据格式 {text: '首页', name: 'Home'}
             // 用于缓存打开的路由 在标签栏上展示
-            tagsArry: [], 
+            tagsArry: [{name: 'Home', text: '首页'}], 
             arrowUp: false, // 用户详情向上箭头
             arrowDown: true, // 用户详情向下箭头
             isShowAsideTitle: true, // 是否展示侧边栏内容
@@ -213,12 +219,6 @@ export default {
         })
     },
     mounted() {
-        // 如果直接跳转到指定页面 没有对应的标签页 则添加
-        const name = this.$route.name
-        if (!this.keepAliveData.includes(name)) {
-            this.tagsArry.push({name, text: this.nameToTitle[name]})
-        }
-        
         this.main = document.querySelector('.sec-right')
         this.asideArrowIcons = document.querySelectorAll('aside .ivu-icon-ios-arrow-down')
         let w = document.documentElement.clientWidth || document.body.clientWidth
@@ -229,6 +229,28 @@ export default {
                 this.shrinkAside()
             }
             w = document.documentElement.clientWidth || document.body.clientWidth
+        }
+    },
+    watch: {
+        $route(to) {
+            const name = to.name
+            this.currentPage = name
+            if (name == '404') {
+                this.crumbs = '404'
+                return
+            }
+
+            if (!this.keepAliveData.includes(name)) {
+                // 如果标签超过8个 则将第一个标签删除
+                if (this.tagsArry.length == 8) {
+                    this.tagsArry.shift()
+                }
+                this.tagsArry.push({name, text: this.nameToTitle[name]})
+            }
+
+            setTimeout(() => {
+                this.crumbs = this.paths[name]
+            }, 0)
         }
     },
     computed: {
@@ -264,7 +286,7 @@ export default {
             this.currentPage = name
             this.crumbs = this.paths[name]
             this.$router.replace({name, params})
-    
+
             if (!this.keepAliveData.includes(name)) {
                 // 如果标签超过8个 则将第一个标签删除
                 if (this.tagsArry.length == 8) {

@@ -1,18 +1,12 @@
 <template>
     <div>
-        基本资料
+        查看消息
         <input type="text">
     </div>
 </template>
 
 <script>
 export default {
-    name: 'UserInfo',
-    data() {
-        return {
-
-        }
-    },
 
 }
 </script>
