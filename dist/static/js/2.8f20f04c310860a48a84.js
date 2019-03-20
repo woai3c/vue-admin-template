@@ -1,2 +1,0 @@
-webpackJsonp([2],{"/BgZ":function(t,e){},kvT1:function(t,e,n){t.exports=n.p+"static/img/404.2ff881a.jpg"},thLP:function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var i={data:function(){return{img:n("kvT1")}}},r={render:function(){var t=this.$createElement,e=this._self._c||t;return e("div",[e("img",{attrs:{src:this.img}}),this._v(" "),e("p",[this._v("未到找指定页面")])])},staticRenderFns:[]};var s=n("VU/8")(i,r,!1,function(t){n("/BgZ")},"data-v-55734cc8",null);e.default=s.exports}});
-//# sourceMappingURL=2.8f20f04c310860a48a84.js.map

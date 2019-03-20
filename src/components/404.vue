@@ -9,7 +9,7 @@
 export default {
     data() {
         return {
-            img: require('../assets/404.jpg')
+            img: require('../assets/imgs/404.jpg')
         }
     }
 }

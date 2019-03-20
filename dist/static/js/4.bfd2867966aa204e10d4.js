@@ -1,2 +1,0 @@
-webpackJsonp([4],{"G+K8":function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r={render:function(){this.$createElement;this._self._c;return this._m(0)},staticRenderFns:[function(){var t=this.$createElement,e=this._self._c||t;return e("div",[this._v("\n    修改密码\n    "),e("input",{attrs:{type:"text"}})])}]};var i=n("VU/8")({data:function(){return{}}},r,!1,function(t){n("PqZu")},"data-v-56baab5f",null);e.default=i.exports},PqZu:function(t,e){}});
-//# sourceMappingURL=4.bfd2867966aa204e10d4.js.map

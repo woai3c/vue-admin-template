@@ -3,46 +3,37 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-const Index = () => import('@/components/common')
-const Login = () => import('@/components/Login.vue')
-const Home = () => import('@/components/Home.vue')
-const T1 = () => import('@/components/T1.vue')
-const Password = () => import('@/components/Password.vue')
-const Msg = () => import('@/components/Msg.vue')
-const UserInfo = () => import('@/components/UserInfo.vue')
-const Error404 = () => import('@/components/404.vue')
-
 // 首页下的子组件
 const children = [
     {
         path: 'home',
-        name: 'Home',
-        component: Home 
+        name: 'home',
+        component: () => import('../views/Home.vue')
     },
     {
         path: 't1',
-        name: 'T1',
-        component: T1 
+        name: 't1',
+        component: () => import('../views/T1.vue')
     },
     {
         path: 'password',
-        name: 'Password',
-        component: Password
+        name: 'password',
+        component: () => import('../views/Password.vue')
     },
     {
         path: 'msg',
-        name: 'Msg',
-        component: Msg
+        name: 'msg',
+        component: () => import('../views/Msg.vue')
     },
     {
         path: 'userinfo',
-        name: 'UserInfo',
-        component: UserInfo
+        name: 'userinfo',
+        component: () => import('../views/UserInfo.vue')
     },
     {
         path: '404',
         name: '404',
-        component: Error404
+        component: () => import('../components/404.vue')
     }
 ]
 
@@ -52,12 +43,12 @@ export default new Router({
         {path: '*', redirect: '/404'},
         {
             path: '/login',
-            name: 'Login',
-            component: Login
+            name: 'login',
+            component: () => import('../components/Login.vue')
         },
         {
             path: '/',
-            component: Index,
+            component: () => import('../components/Index.vue'),
             children,
         }
     ]   
