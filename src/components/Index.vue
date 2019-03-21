@@ -444,7 +444,7 @@ export default {
                         on: {
                             click() {
                                 // 点击查看跳转到消息页
-                                self.gotoPage('Msg')
+                                self.gotoPage('msg')
                                 self.hasNewMsg = false,
                                 self.msgNum = 0
                             }
