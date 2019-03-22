@@ -111,10 +111,10 @@ this.$parent.gotoPage('xxx')
 ```
 ### 路由传参
 ```
-this.gotoPage('UserInfo', {
+this.gotoPage('userinfo', {
     id: id,
 })
-// 在UserInfo组件里取参
+// 在userinfo组件里取参
 this.$route.params.id
 ```
 
