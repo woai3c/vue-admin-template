@@ -130,7 +130,7 @@ npm i
 
 #### 开发
 ```
-npm run dev
+npm run serve
 ```
 
 #### 打包
