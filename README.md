@@ -73,10 +73,10 @@ menuItems: [
 * 刷新当前标签页
 * 关闭其他标签/关闭所有标签
 
-**注意：**组件的名称和路由的名称一定要一致，例如 `index.vue` 组件 `name:index`，则在路由文件中也要给它设置为 `name:index`，否则页面内容不能缓存
+**注意：** 组件的名称和路由的名称一定要一致，例如 `Home.vue` 组件名称 `name: home`，则在路由文件中也要给它设置为 `name: home`，否则页面内容不能缓存
 
 ```js
-// 在router.js中
+// 在router文件中
 {
     path: 'home',
     name: 'home',
