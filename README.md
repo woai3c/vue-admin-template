@@ -73,6 +73,22 @@ menuItems: [
 * 刷新当前标签页
 * 关闭其他标签/关闭所有标签
 
+**注意：**组件的名称和路由的名称一定要一致，例如 `index.vue` 组件 `name:index`，则在路由文件中也要给它设置为 `name:index`，否则页面内容不能缓存
+
+```js
+// 在router.js中
+{
+    path: 'home',
+    name: 'home',
+    component: () => import('../views/Home.vue')
+}
+
+// 在Home.vue中
+export default {
+    name: 'home'
+}
+```
+
 #### 侧边栏
 * 伸展/收缩
 * 页面宽度过小自动收缩
