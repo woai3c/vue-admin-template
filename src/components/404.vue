@@ -7,6 +7,7 @@
 
 <script>
 export default {
+    name: '404',
     data() {
         return {
             img: require('../assets/imgs/404.jpg')

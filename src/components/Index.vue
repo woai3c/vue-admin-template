@@ -128,6 +128,7 @@
 
 <script>
 export default {
+    name: 'index',
     data () {
         return {
             // 用于储存页面路径

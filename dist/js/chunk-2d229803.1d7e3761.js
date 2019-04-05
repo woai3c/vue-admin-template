@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d229803"],{de5a:function(e,t,n){"use strict";n.r(t);var r=function(){var e=this,t=e.$createElement;e._self._c;return e._m(0)},a=[function(){var e=this,t=e.$createElement,n=e._self._c||t;return n("div",[e._v("\n    查看消息\n    "),n("input",{attrs:{type:"text"}})])}],c={name:"msg"},s=c,u=n("2877"),i=Object(u["a"])(s,r,a,!1,null,"7437f123",null);t["default"]=i.exports}}]);
+//# sourceMappingURL=chunk-2d229803.1d7e3761.js.map

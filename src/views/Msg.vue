@@ -7,7 +7,7 @@
 
 <script>
 export default {
-
+    name: 'msg'
 }
 </script>
 

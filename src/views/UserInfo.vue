@@ -7,6 +7,7 @@
 
 <script>
 export default {
+    name: 'userinfo',
     data() {
         return {
 
