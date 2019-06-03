@@ -32,14 +32,6 @@ export default {
     created() {
         this.bg.backgroundImage = 'url(' + require('../assets/imgs/bg0' + new Date().getDay() + '.jpg') + ')'
     },
-    mounted() {
-        document.onkeydown = e => {
-            // 监听回车事件
-            if (e.keyCode == 13) {
-                this.submit()
-            }
-        }
-    },
     methods: {
         verifyAccount(e) {
             if (this.account !== 'admin') {
