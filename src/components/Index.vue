@@ -204,7 +204,7 @@ export default {
         $route(to) {
             const name = to.name
             this.currentPage = name
-            if (name == '404') {
+            if (name == 'error') {
                 this.crumbs = '404'
                 return
             }

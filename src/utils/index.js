@@ -43,13 +43,13 @@ export function menusToRoutes(data) {
     })
 
     children.push({
-        path: '404',
-        name: '404',
-        component: () => import('../components/404.vue')
+        path: 'error',
+        name: 'error',
+        component: () => import('../components/Error.vue')
     })
 
     result.push(
-        {path: '*', redirect: '/404'},
+        {path: '*', redirect: '/error'},
     )
 
     return result
