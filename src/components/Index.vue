@@ -134,48 +134,7 @@ export default {
             // 用于储存页面路径
             paths: {},
             // 当前显示页面
-            currentPage: 'home',
-            // 左侧菜单栏数据
-            menuItems: [
-                {
-                    name: 'home', // 要跳转的路由名称 不是路径
-                    size: 18, // icon大小
-                    type: 'md-home', // icon类型
-                    text: '主页' // 文本内容
-                },
-                {
-                    text: '二级菜单',
-                    type: 'ios-paper',
-                    children: [
-                        {
-                            type: 'ios-grid',
-                            name: 't1',
-                            text: '表格'
-                        },
-                        {
-                            text: '三级菜单',
-                            type: 'ios-paper',
-                            children: [
-                                {
-                                    type: 'ios-notifications-outline',
-                                    name: 'msg',
-                                    text: '查看消息'
-                                },
-                                {
-                                    type: 'md-lock',
-                                    name: 'password',
-                                    text: '修改密码'
-                                },
-                                {
-                                    type: 'md-person',
-                                    name: 'userinfo',
-                                    text: '基本资料',
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ],
+            currentPage: '',
             openMenus: [], // 要打开的菜单名字 name属性
             menuCache: [], // 缓存已经打开的菜单
             showLoading: false, // 是否显示loading
@@ -185,7 +144,7 @@ export default {
             // 标签栏         标签标题     路由名称
             // 数据格式 {text: '首页', name: 'home'}
             // 用于缓存打开的路由 在标签栏上展示
-            tagsArry: [{name: 'home', text: '首页'}], 
+            tagsArry: [], 
             arrowUp: false, // 用户详情向上箭头
             arrowDown: true, // 用户详情向下箭头
             isShowAsideTitle: true, // 是否展示侧边栏内容
@@ -220,6 +179,14 @@ export default {
         })
     },
     mounted() {
+        // 第一个标签
+        const name = this.$route.name
+        this.currentPage = name
+        this.tagsArry.push({
+            text: this.nameToTitle[name],
+            name: name
+        })
+        
         this.main = document.querySelector('.sec-right')
         this.asideArrowIcons = document.querySelectorAll('aside .ivu-icon-ios-arrow-down')
         let w = document.documentElement.clientWidth || document.body.clientWidth
@@ -229,6 +196,7 @@ export default {
                 && w > (document.documentElement.clientWidth || document.body.clientWidth)) {
                 this.shrinkAside()
             }
+
             w = document.documentElement.clientWidth || document.body.clientWidth
         }
     },
@@ -255,6 +223,10 @@ export default {
         }
     },
     computed: {
+        // 菜单栏
+        menuItems() {
+            return this.$store.state.menuItems
+        },
         // 需要缓存的路由
         keepAliveData() {
             return this.tagsArry.map(item => item.name)
@@ -266,6 +238,7 @@ export default {
             this.menuItems.forEach(e => {
                 this.processNameToTitle(obj, e)
             })
+
             return obj
         },
         // 用户名
@@ -298,7 +271,6 @@ export default {
         },
         // 用户操作
         userOperate(name) {
-            console.log('33l')
             switch(name) {
                 case '1':
                     // 修改密码

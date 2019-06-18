@@ -1,20 +1,33 @@
 import router from './router'
 import store from './store'
-// 这只是简单示范 建议结合cookie或token使用
+import { menusToRoutes } from './utils'
+// 是否有菜单数据
+let hasMenus = false
+// 这只是简单示范 建议结合token使用
 router.beforeEach((to, from, next) => {
-    if (to.name == 'login') {
-        // 如果有用户信息 直接转到首页
-        if (store.state.user.name) {
-            next({name: 'home'})
+    if (store.state.user.name) {
+        if (to.path === '/login') {
+            next({path: '/'})
         } else {
-            next()
+            if (hasMenus) {
+                next()
+            } else {
+                try {
+                    const routes = menusToRoutes(store.state.menuItems)
+                    // 动态添加路由
+                    router.addRoutes(routes)
+                    hasMenus = true
+                    next({path: to.path || '/'})
+                } catch (error) {
+                    next(`/login?redirect=${to.path}`)
+                }
+            }
         }
     } else {
-        // 如果有用户信息 则跳转 否则跳转到登陆页
-        if (store.state.user.name) {
+        if (to.path === '/login') {
             next()
         } else {
-            next({name: 'login'})
+            next(`/login?redirect=${to.path}`)
         }
     }
 })

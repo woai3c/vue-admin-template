@@ -32,6 +32,14 @@ export default {
     created() {
         this.bg.backgroundImage = 'url(' + require('../assets/imgs/bg0' + new Date().getDay() + '.jpg') + ')'
     },
+    watch: {
+        $route: {
+            handler: function(route) {
+                this.redirect = route.query && route.query.redirect
+            },
+            immediate: true
+        }
+    },
     methods: {
         verifyAccount(e) {
             if (this.account !== 'admin') {
@@ -61,10 +69,8 @@ export default {
                     name: '小明',
                     img: require('../assets/imgs/user.jpg')
                 })
-                console.log('登陆')
-                setTimeout(() => {
-                    this.$router.replace('/')
-                }, 100)
+
+                this.$router.push({path: this.redirect || '/'})
             } else {
                 if (this.account !== 'admin') {
                     this.accountError = '账号为admin'
