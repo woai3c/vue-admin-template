@@ -14,8 +14,8 @@ const router = new Router({
     ]   
 })
 
-// 需要通过后台数据来生成的组件 请写在这
-export const routes = {
+// 需要通过后台数据来生成的组件
+export const asyncRoutes = {
     'home': {
         path: 'home',
         name: 'home',
