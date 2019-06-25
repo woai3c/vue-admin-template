@@ -127,6 +127,8 @@
 </template>
 
 <script>
+import { resetRouter } from '../router'
+
 export default {
     name: 'index',
     data () {
@@ -152,7 +154,9 @@ export default {
             asideClassName: 'aside-big', // 控制侧边栏宽度变化
             asideArrowIcons: [], // 缓存侧边栏箭头图标 收缩时用
             // 面包屑
-            crumbs: '主页'
+            crumbs: '主页',
+            userName: '',
+            userImg: '',
         }
     },
     created() {
@@ -187,6 +191,10 @@ export default {
             name: name
         })
         
+        // 设置用户信息
+        this.userName = localStorage.getItem('userName')
+        this.userImg = localStorage.getItem('userImg')
+
         this.main = document.querySelector('.sec-right')
         this.asideArrowIcons = document.querySelectorAll('aside .ivu-icon-ios-arrow-down')
         let w = document.documentElement.clientWidth || document.body.clientWidth
@@ -241,14 +249,6 @@ export default {
 
             return obj
         },
-        // 用户名
-        userName() {
-            return this.$store.state.user.name
-        },
-        // 用户图片
-        userImg() {
-            return this.$store.state.user.img
-        }
     },
     methods: {
         // 判断当前标签页是否激活状态
@@ -282,10 +282,11 @@ export default {
                     break
                 case '3':
                     // 退出登陆 清除用户资料
-                    this.$store.commit('setUser', {
-                        name: '',
-                        img: ''
-                    })
+                    localStorage.setItem('token', '')
+                    localStorage.setItem('userImg', '')
+                    localStorage.setItem('userName', '')
+                    // 重设路由
+                    resetRouter()
                     this.$router.replace({name: 'login'})
                     break
             }

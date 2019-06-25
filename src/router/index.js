@@ -3,16 +3,14 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-const router = new Router({
-    routes: [
-        {
-            path: '/login',
-            name: 'login',
-            component: () => import('../components/Login.vue')
-        },
-        {path: '/', redirect: '/home'},
-    ]   
-})
+const commonRoutes = [
+    {
+        path: '/login',
+        name: 'login',
+        component: () => import('../components/Login.vue')
+    },
+    {path: '/', redirect: '/home'},
+] 
 
 // 需要通过后台数据来生成的组件
 export const asyncRoutes = {
@@ -41,6 +39,17 @@ export const asyncRoutes = {
         name: 'userinfo',
         component: () => import('../views/UserInfo.vue')
     }
+}
+
+const createRouter = () => new Router({
+    routes: commonRoutes
+})
+
+const router = createRouter()
+
+export function resetRouter() {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher 
 }
 
 export default router

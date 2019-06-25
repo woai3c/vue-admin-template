@@ -5,10 +5,6 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
-        user: {
-            name: '',
-            img: ''
-        },
         // 左侧菜单栏数据
         menuItems: [
             {
@@ -52,9 +48,6 @@ const store = new Vuex.Store({
         ],
     },
     mutations: {
-        setUser(state, obj) {
-            state.user = {...obj}
-        },
         setMenus(state, items) {
             state.menuItems = [...items]
         },

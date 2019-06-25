@@ -1,11 +1,11 @@
 import router from './router'
 import store from './store'
 import { menusToRoutes } from './utils'
+
 // 是否有菜单数据
 let hasMenus = false
-// 这只是简单示范 建议结合token使用
 router.beforeEach(async (to, from, next) => {
-    if (store.state.user.name) {
+    if (localStorage.getItem('token')) {
         if (to.path === '/login') {
             next({path: '/'})
         } else {
@@ -13,7 +13,7 @@ router.beforeEach(async (to, from, next) => {
                 next()
             } else {
                 try {
-                    // 这里可以用await 配合请求后台数据来生成路由
+                    // 这里可以用 await 配合请求后台数据来生成路由
                     const routes = menusToRoutes(store.state.menuItems)
                     // 动态添加路由
                     router.addRoutes(routes)
@@ -25,6 +25,7 @@ router.beforeEach(async (to, from, next) => {
             }
         }
     } else {
+        hasMenus = false
         if (to.path === '/login') {
             next()
         } else {
