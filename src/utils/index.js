@@ -1,4 +1,4 @@
-import { asyncRoutes } from '../router'
+import { asyncRoutes, resetRouter } from '../router'
 
 // 将菜单信息转成对应的路由信息 动态添加
 export function menusToRoutes(data) {
@@ -37,4 +37,13 @@ function generateRoutes(children, item) {
             generateRoutes(children, e)
         })
     }
+}
+
+export function resetTokenAndClearUser() {
+    // 退出登陆 清除用户资料
+    localStorage.setItem('token', '')
+    localStorage.setItem('userImg', '')
+    localStorage.setItem('userName', '')
+    // 重设路由
+    resetRouter()
 }
