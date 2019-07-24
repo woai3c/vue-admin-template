@@ -127,7 +127,7 @@
 </template>
 
 <script>
-import { resetRouter } from '../router'
+import { resetTokenAndClearUser } from '../utils'
 
 export default {
     name: 'index',
@@ -173,9 +173,16 @@ export default {
         })
         // 添加响应拦截器
         this.$axios.interceptors.response.use(response => {
+            // 可以在这里对返回的数据进行错误处理 如果返回的 code 不对 直接报错
+            // 就可以省去在业务代码里重复判断
+            // 例子
+            // if (res.code != 0) {
+            //     this.$Message.error(res.msg)
+            //     return Promise.reject()
+            // }
             this.showLoading = false
-            // 对响应数据做点什么
-            return response
+            const res = response.data
+            return res
         }, error => {
             this.showLoading = false
             // 对响应错误做点什么
@@ -281,12 +288,7 @@ export default {
                     this.gotoPage('userinfo')
                     break
                 case '3':
-                    // 退出登陆 清除用户资料
-                    localStorage.setItem('token', '')
-                    localStorage.setItem('userImg', '')
-                    localStorage.setItem('userName', '')
-                    // 重设路由
-                    resetRouter()
+                    resetTokenAndClearUser()
                     this.$router.replace({name: 'login'})
                     break
             }
