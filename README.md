@@ -2,6 +2,8 @@
 vue轻量级后台管理系统基础模板<br>
 [在线预览](https://woai3c.github.io)
 ## 更新
+### 2019.8.19 修复BUG
+`components/Index.vue` 文件第 31 行代码的 `v-show="isShowAsideTitle"` 会造成侧边栏收缩时二级菜单隐藏，目前已修复。
 ### 2019.7.24 更新
 **增加页面进度条**
 
