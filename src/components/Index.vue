@@ -28,7 +28,7 @@
                                     <span v-show="isShowAsideTitle">{{threeItem.text}}</span>
                                 </MenuItem>
                             </Submenu>
-                            <MenuItem v-else v-show="isShowAsideTitle" :name="subItem.name">
+                            <MenuItem v-else :name="subItem.name">
                                 <Icon :size="subItem.size" :type="subItem.type"/>
                                 <span v-show="isShowAsideTitle">{{subItem.text}}</span>
                             </MenuItem>
@@ -307,13 +307,15 @@ export default {
             this.asideArrowIcons.forEach(e => {
                 e.style.display = 'none'
             })
+
             this.isShowAsideTitle = false
             this.openMenus = []
             this.$nextTick(() => {
                 this.$refs.asideMenu.updateOpened()
             })
+
             setTimeout(() => {
-                this.asideClassName =''
+                this.asideClassName = ''
                 this.main.style.width = 'calc(100% - 80px)'
             }, 0)
         },
@@ -324,6 +326,7 @@ export default {
                 this.asideArrowIcons.forEach(e => {
                     e.style.display = 'block'
                 })
+                
                 this.openMenus = this.menuCache
                 this.$nextTick(() => {
                     this.$refs.asideMenu.updateOpened()
