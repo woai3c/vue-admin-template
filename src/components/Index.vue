@@ -490,6 +490,7 @@ aside {
     display: flex;
     flex-direction: column;
     transition: width .5s;
+    overflow: auto;
 }
 /* 主体页面头部 */
 .top-c {
