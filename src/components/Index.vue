@@ -8,7 +8,7 @@
                 <span v-show="isShowAsideTitle">后台管理系统</span>
             </div>
             <!-- 菜单栏 -->
-            <Menu ref="asideMenu" theme="dark" width="100%" @on-select="gotoPage" 
+            <Menu class="menu" ref="asideMenu" theme="dark" width="100%" @on-select="gotoPage" 
             accordion :open-names="openMenus" :active-name="currentPage" @on-open-change="menuChange">
                 <!-- 动态菜单 -->
                 <div v-for="(item, index) in menuItems" :key="index">
@@ -173,7 +173,7 @@ export default {
         })
         // 添加响应拦截器
         this.$axios.interceptors.response.use(response => {
-            // 可以在这里对返回的数据进行错误处理 如果返回的 code 不对 直接报错
+            // 可以在这里对返回的数据进行错误处理 如果返回的 code 不对 直接报错或退出登陆
             // 就可以省去在业务代码里重复判断
             // 例子
             // if (res.code != 0) {
@@ -198,22 +198,21 @@ export default {
             name: name
         })
         
+        // 根据路由打开对应的菜单栏
+        this.openMenus = this.getMenus(name)
+        this.$nextTick(() => {
+            this.$refs.asideMenu.updateOpened()
+        })
+
         // 设置用户信息
         this.userName = localStorage.getItem('userName')
         this.userImg = localStorage.getItem('userImg')
 
         this.main = document.querySelector('.sec-right')
         this.asideArrowIcons = document.querySelectorAll('aside .ivu-icon-ios-arrow-down')
-        let w = document.documentElement.clientWidth || document.body.clientWidth
-        window.onresize = () => {
-            // 可视窗口宽度太小 自动收缩侧边栏
-            if (w < 1300 && this.isShowAsideTitle 
-                && w > (document.documentElement.clientWidth || document.body.clientWidth)) {
-                this.shrinkAside()
-            }
 
-            w = document.documentElement.clientWidth || document.body.clientWidth
-        }
+        // 监听窗口大小 自动收缩侧边栏
+        this.monitorWindowSize()
     },
     watch: {
         $route(to) {
@@ -258,6 +257,57 @@ export default {
         },
     },
     methods: {
+        getMenus(name) {
+            let menus
+            const tagTitle = this.nameToTitle[name]
+            for (let i = 0, l = this.menuItems.length; i < l; i++) {
+                const item = this.menuItems[i]
+                menus = []
+                menus[0] = i
+                if (item.text == tagTitle) {
+                    return menus
+                }
+
+                if (item.children) {
+                    for (let j = 0, ll = item.children.length; j < ll; j++) {
+                        const child = item.children[j]
+                        menus[1] = i + '-' + j
+                        menus.length = 2
+                        if (child.text == tagTitle) {
+                            return menus
+                        }
+
+                        if (child.children) {
+                            for (let k = 0, lll = child.children.length; k < lll; k++) {
+                                const grandson = child.children[k]
+                                menus[2] = i + '-' + j + '-' + k
+                                if (grandson.text == tagTitle) {
+                                    return menus
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        monitorWindowSize() {
+            let w = document.documentElement.clientWidth || document.body.clientWidth
+            if (w < 1300) {
+                this.shrinkAside()
+            }
+
+            window.onresize = () => {
+                // 可视窗口宽度太小 自动收缩侧边栏
+                if (w < 1300 && this.isShowAsideTitle 
+                    && w > (document.documentElement.clientWidth || document.body.clientWidth)) {
+                    this.shrinkAside()
+                }
+
+                w = document.documentElement.clientWidth || document.body.clientWidth
+            }
+        },
+
         // 判断当前标签页是否激活状态
         isActive(name) {
             return this.$route.name === name
