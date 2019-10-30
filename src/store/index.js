@@ -11,7 +11,7 @@ const store = new Vuex.Store({
                 name: 'home', // 要跳转的路由名称 不是路径
                 size: 18, // icon大小
                 type: 'md-home', // icon类型
-                text: '主页' // 文本内容
+                text: '主页', // 文本内容
             },
             {
                 text: '二级菜单',
@@ -20,7 +20,8 @@ const store = new Vuex.Store({
                     {
                         type: 'ios-grid',
                         name: 't1',
-                        text: '表格'
+                        text: '表格',
+                        hidden: true, // 隐藏此菜单 可以通过在地址栏上输入对应的 URL 来显示页面
                     },
                     {
                         text: '三级菜单',

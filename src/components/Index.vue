@@ -23,18 +23,18 @@
                                     <Icon :size="subItem.size" :type="subItem.type"/>
                                     <span v-show="isShowAsideTitle">{{subItem.text}}</span>
                                 </template>
-                                <MenuItem class="menu-level-3" v-for="(threeItem, k) in subItem.children" :name="threeItem.name" :key="index + i + k">
+                                <MenuItem class="menu-level-3" v-for="(threeItem, k) in subItem.children" v-if="!threeItem.hidden" :name="threeItem.name" :key="index + i + k">
                                     <Icon :size="threeItem.size" :type="threeItem.type"/>
                                     <span v-show="isShowAsideTitle">{{threeItem.text}}</span>
                                 </MenuItem>
                             </Submenu>
-                            <MenuItem v-else :name="subItem.name">
+                            <MenuItem v-else-if="!subItem.hidden" :name="subItem.name">
                                 <Icon :size="subItem.size" :type="subItem.type"/>
                                 <span v-show="isShowAsideTitle">{{subItem.text}}</span>
                             </MenuItem>
                         </div>
                     </Submenu>
-                    <MenuItem v-else :name="item.name">
+                    <MenuItem v-else-if="!item.hidden" :name="item.name">
                         <Icon :size="item.size" :type="item.type" />
                         <span v-show="isShowAsideTitle">{{item.text}}</span>
                     </MenuItem>
@@ -84,7 +84,7 @@
                 <!-- 标签栏 -->
                 <div class="div-tags">
                     <ul class="ul-c">
-                        <li v-for="(item, index) in tagsArry" :class="{active: isActive(item.name)}" @click="activeTag(index)">
+                        <li v-for="(item, index) in tagsArry" :key="index" :class="{active: isActive(item.name)}" @click="activeTag(index)">
                             <a class="li-a">
                                 {{item.text}}
                             </a>
