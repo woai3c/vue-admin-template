@@ -23,9 +23,11 @@
                                     <Icon :size="subItem.size" :type="subItem.type"/>
                                     <span v-show="isShowAsideTitle">{{subItem.text}}</span>
                                 </template>
-                                <MenuItem class="menu-level-3" v-for="(threeItem, k) in subItem.children" v-if="!threeItem.hidden" :name="threeItem.name" :key="index + i + k">
-                                    <Icon :size="threeItem.size" :type="threeItem.type"/>
-                                    <span v-show="isShowAsideTitle">{{threeItem.text}}</span>
+                                <MenuItem class="menu-level-3" v-for="(threeItem, k) in subItem.children" :name="threeItem.name" :key="index + i + k">
+                                    <template v-if="!threeItem.hidden">
+                                        <Icon :size="threeItem.size" :type="threeItem.type"/>
+                                        <span v-show="isShowAsideTitle">{{threeItem.text}}</span>
+                                    </template>
                                 </MenuItem>
                             </Submenu>
                             <MenuItem v-else-if="!subItem.hidden" :name="subItem.name">
