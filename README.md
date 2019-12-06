@@ -100,6 +100,27 @@ npm run serve
 ````
 npm run build
 ````
-打包后的文件要放在服务器根目录下，如果不是服务器根目录则需要更改打包的路径，具体规则请自行搜索。
-
+打包后的文件要放在服务器根目录下，否则会出现空白页面。
+如果不是服务器根目录则需要更改打包的路径，打开 `vue.config.js` 文件，添加如下代码
+```js
+publicPath: './',
+```
+添加后如下所示
+```js
+module.exports = {
+    publicPath: './',
+    devServer: {
+        proxy: {
+            '/api': {
+                target: 'http://xxxx/device/', //对应自己的接口
+                changeOrigin: true,
+                ws: true,
+                pathRewrite: {
+                  '^/api': ''
+                }
+            }
+        }
+    }
+}
+```
 ### 如果对你有帮助，请给个Star
