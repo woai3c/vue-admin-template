@@ -8,35 +8,36 @@
                 <span v-show="isShowAsideTitle">后台管理系统</span>
             </div>
             <!-- 菜单栏 -->
-            <Menu class="menu" ref="asideMenu" theme="dark" width="100%" @on-select="gotoPage" 
+            <Menu class="menu" ref="asideMenu" theme="dark" width="100%" @on-select="selectMenuCallback" 
             accordion :open-names="openMenus" :active-name="currentPage" @on-open-change="menuChange">
                 <!-- 动态菜单 -->
                 <div v-for="(item, index) in menuItems" :key="index">
-                    <Submenu v-if="item.children" :name="index">
+                    <Submenu :class="isShowAsideTitle? '' : 'shrink'" v-if="item.children" :name="index">
                         <template slot="title">
                             <Icon :size="item.size" :type="item.type"/>
                             <span v-show="isShowAsideTitle">{{item.text}}</span>
                         </template>
                         <div v-for="(subItem, i) in item.children" :key="index + i">
-                            <Submenu v-if="subItem.children" :name="index + '-' + i">
+                            <Submenu :class="isShowAsideTitle? '' : 'shrink'" v-if="subItem.children" :name="index + '-' + i">
                                 <template slot="title">
                                     <Icon :size="subItem.size" :type="subItem.type"/>
                                     <span v-show="isShowAsideTitle">{{subItem.text}}</span>
                                 </template>
-                                <MenuItem class="menu-level-3" v-for="(threeItem, k) in subItem.children" :name="threeItem.name" :key="index + i + k">
+                                <MenuItem :class="isShowAsideTitle? '' : 'shrink'" class="menu-level-3" v-for="(threeItem, k) in subItem.children" 
+                                :name="threeItem.name" :key="index + i + k">
                                     <template v-if="!threeItem.hidden">
                                         <Icon :size="threeItem.size" :type="threeItem.type"/>
                                         <span v-show="isShowAsideTitle">{{threeItem.text}}</span>
                                     </template>
                                 </MenuItem>
                             </Submenu>
-                            <MenuItem v-else-if="!subItem.hidden" :name="subItem.name">
+                            <MenuItem :class="isShowAsideTitle? '' : 'shrink'" v-else-if="!subItem.hidden" :name="subItem.name">
                                 <Icon :size="subItem.size" :type="subItem.type"/>
                                 <span v-show="isShowAsideTitle">{{subItem.text}}</span>
                             </MenuItem>
                         </div>
                     </Submenu>
-                    <MenuItem v-else-if="!item.hidden" :name="item.name">
+                    <MenuItem :class="isShowAsideTitle? '' : 'shrink'" v-else-if="!item.hidden" :name="item.name">
                         <Icon :size="item.size" :type="item.type" />
                         <span v-show="isShowAsideTitle">{{item.text}}</span>
                     </MenuItem>
@@ -110,8 +111,6 @@
                     </div>
                 </div>
             </div>
-            <!-- 页面主体和头部之间放一个遮罩层分隔开 -->
-            <div class="mask"></div>
             <!-- 页面主体 -->
             <div class="main-content">
                 <div class="view-c">
@@ -328,6 +327,14 @@ export default {
                 this.tagsArry.push({name, text: this.nameToTitle[name]})
             }
         },
+        // 选择菜单回调函数
+        selectMenuCallback(name) {
+            this.gotoPage(name)
+            this.expandAside()
+            setTimeout(() => {
+                this.isShowAsideTitle = true
+            }, 200)
+        },
         // 用户操作
         userOperate(name) {
             switch(name) {
@@ -356,9 +363,9 @@ export default {
         },
         // 收缩
         shrinkAside() {
-            this.asideArrowIcons.forEach(e => {
-                e.style.display = 'none'
-            })
+            for (let i = 0, len = this.asideArrowIcons.length; i < len; i++) {
+                this.asideArrowIcons[i].style.display = 'none'
+            }
 
             this.isShowAsideTitle = false
             this.openMenus = []
@@ -368,16 +375,16 @@ export default {
 
             setTimeout(() => {
                 this.asideClassName = ''
-                this.main.style.width = 'calc(100% - 80px)'
+                this.main.style.marginLeft = '90px'
             }, 0)
         },
         // 展开
         expandAside() {
             setTimeout(() => {
                 this.isShowAsideTitle = true
-                this.asideArrowIcons.forEach(e => {
-                    e.style.display = 'block'
-                })
+                for (let i = 0, len = this.asideArrowIcons.length; i < len; i++) {
+                    this.asideArrowIcons[i].style.display = 'block'
+                }
                 
                 this.openMenus = this.menuCache
                 this.$nextTick(() => {
@@ -385,7 +392,7 @@ export default {
                 })
             }, 200)
             this.asideClassName = 'aside-big'
-            this.main.style.width = 'calc(100% - 220px)'
+            this.main.style.marginLeft = '220px'
         },
         // 刷新当前标签页
         reloadPage() {
@@ -433,7 +440,6 @@ export default {
                     this.reloadPage()
                 }
             }
-            
         },
         // 根据路由名称关闭页面
         closeName(name) {
@@ -508,16 +514,17 @@ export default {
 <style scoped>
 .index-vue {
     height: 100%;
-    display: flex;
-    justify-content: space-between;
     color: #666;
 }
 /* 侧边栏 */
 aside {
-    min-width: 80px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 90px;
     background: #20222A;
     height: 100%;
-    transition: all .5s;
+    transition: width .3s;
     overflow: auto;
 }
 .logo-c {
@@ -533,26 +540,20 @@ aside {
     margin-right: 10px;
 }
 .aside-big {
-    min-width: 220px;
+    width: 220px;
 }
 /* 主体页面 */
 .sec-right {
     height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    transition: width .5s;
-    overflow: auto;
+    margin-left: 220px;
+    transition: margin-left .3s;
+    overflow: hidden;;
+    background: #eee;
 }
 /* 主体页面头部 */
-.top-c {
-    background: rgba(230,230,230,.5);
-    width: 100%;
-}
 header {
     height: 50px;
     border-bottom: none;
-    box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
     background: #fff;
     display: flex;
     align-items: center;
@@ -608,6 +609,7 @@ header .ivu-icon {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin: 4px 0;
 }
 .div-icons {
     display: flex;
@@ -621,7 +623,6 @@ header .ivu-icon {
 /* 标签栏 */
 .ul-c {
     height: 34px;
-    margin-top: 2px;
     background: #fff;
     display: flex;
     justify-content: flex-start;
@@ -669,9 +670,7 @@ a {
 .main-content {
     overflow: auto;
     height: 100%;
-    width: 100%;
     background: #eee;
-    padding: 10px 12px;
 }
 .view-c {
     position: relative;
@@ -693,14 +692,6 @@ a {
     align-items: center;
     justify-content: center;
 }
-.mask {
-    position: fixed;
-    background: #eee;
-    height: 10px;
-    width: 100%;
-    top: 85px;
-    z-index: 10;
-}
 .crumbs {
     margin-left: 10px;
     color: #97a8be;
@@ -708,5 +699,8 @@ a {
 }
 .menu-level-3 .ivu-icon {
     font-size: 18px;
+}
+.shrink {
+    text-align: center;
 }
 </style>
