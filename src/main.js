@@ -2,13 +2,13 @@ import Vue from 'vue'
 import App from './App'
 import store from './store'
 import router from './router'
-import iView from 'iview'
 import axios from 'axios'
-import 'iview/dist/styles/iview.css'
+import ViewUI from 'view-design'
+import 'view-design/dist/styles/iview.css'
 import './permission'
 
 Vue.config.productionTip = false
-Vue.use(iView)
+Vue.use(ViewUI)
 
 // 设置基础URL
 axios.defaults.baseURL = ''
