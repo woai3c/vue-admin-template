@@ -8,7 +8,7 @@
                 <span v-show="isShowAsideTitle">后台管理系统</span>
             </div>
             <!-- 菜单栏 -->
-            <Menu class="menu" ref="asideMenu" theme="dark" width="100%" @on-select="selectMenuCallback" 
+            <Menu class="menu" ref="asideMenu" theme="dark" width="100%" @on-select="selectMenuCallback"
             accordion :open-names="openMenus" :active-name="currentPage" @on-open-change="menuChange">
                 <!-- 动态菜单 -->
                 <div v-for="(item, index) in menuItems" :key="index">
@@ -23,8 +23,8 @@
                                     <Icon :size="subItem.size" :type="subItem.type"/>
                                     <span v-show="isShowAsideTitle">{{subItem.text}}</span>
                                 </template>
-                                <MenuItem :class="isShowAsideTitle? '' : 'shrink'" class="menu-level-3" v-for="(threeItem, k) in subItem.children" 
-                                :name="threeItem.name" :key="index + i + k">
+                                <MenuItem :class="isShowAsideTitle? '' : 'shrink'" class="menu-level-3"
+                                v-for="(threeItem, k) in subItem.children" :name="threeItem.name" :key="index + i + k">
                                     <template v-if="!threeItem.hidden">
                                         <Icon :size="threeItem.size" :type="threeItem.type"/>
                                         <span v-show="isShowAsideTitle">{{threeItem.text}}</span>
@@ -132,7 +132,7 @@ import { resetTokenAndClearUser } from '../utils'
 
 export default {
     name: 'index',
-    data () {
+    data() {
         return {
             // 用于储存页面路径
             paths: {},
@@ -147,7 +147,7 @@ export default {
             // 标签栏         标签标题     路由名称
             // 数据格式 {text: '首页', name: 'home'}
             // 用于缓存打开的路由 在标签栏上展示
-            tagsArry: [], 
+            tagsArry: [],
             arrowUp: false, // 用户详情向上箭头
             arrowDown: true, // 用户详情向下箭头
             isShowAsideTitle: true, // 是否展示侧边栏内容
@@ -198,9 +198,9 @@ export default {
         this.currentPage = name
         this.tagsArry.push({
             text: this.nameToTitle[name],
-            name: name
+            name,
         })
-        
+
         // 根据路由打开对应的菜单栏
         this.openMenus = this.getMenus(name)
         this.$nextTick(() => {
@@ -231,13 +231,13 @@ export default {
                 if (this.tagsArry.length == 8) {
                     this.tagsArry.shift()
                 }
-                this.tagsArry.push({name, text: this.nameToTitle[name]})
+                this.tagsArry.push({ name, text: this.nameToTitle[name] })
             }
 
             setTimeout(() => {
                 this.crumbs = this.paths[name]
             }, 0)
-        }
+        },
     },
     computed: {
         // 菜单栏
@@ -302,7 +302,7 @@ export default {
 
             window.onresize = () => {
                 // 可视窗口宽度太小 自动收缩侧边栏
-                if (w < 1300 && this.isShowAsideTitle 
+                if (w < 1300 && this.isShowAsideTitle
                     && w > (document.documentElement.clientWidth || document.body.clientWidth)) {
                     this.shrinkAside()
                 }
@@ -319,14 +319,14 @@ export default {
         gotoPage(name, params) {
             this.currentPage = name
             this.crumbs = this.paths[name]
-            this.$router.replace({name, params})
+            this.$router.replace({ name, params })
 
             if (!this.keepAliveData.includes(name)) {
                 // 如果标签超过8个 则将第一个标签删除
                 if (this.tagsArry.length == 8) {
                     this.tagsArry.shift()
                 }
-                this.tagsArry.push({name, text: this.nameToTitle[name]})
+                this.tagsArry.push({ name, text: this.nameToTitle[name] })
             }
         },
         // 选择菜单回调函数
@@ -339,7 +339,7 @@ export default {
         },
         // 用户操作
         userOperate(name) {
-            switch(name) {
+            switch (name) {
                 case '1':
                     // 修改密码
                     this.gotoPage('password')
@@ -350,7 +350,7 @@ export default {
                     break
                 case '3':
                     resetTokenAndClearUser()
-                    this.$router.replace({name: 'login'})
+                    this.$router.replace({ name: 'login' })
                     break
             }
         },
@@ -361,7 +361,11 @@ export default {
         },
         // 判断
         isShrinkAside() {
-            this.isShowAsideTitle? this.shrinkAside() : this.expandAside()
+            if (this.isShowAsideTitle) {
+                this.shrinkAside()
+            } else {
+                this.expandAside()
+            }
         },
         // 收缩
         shrinkAside() {
@@ -387,7 +391,7 @@ export default {
                 for (let i = 0, len = this.asideArrowIcons.length; i < len; i++) {
                     this.asideArrowIcons[i].style.display = 'block'
                 }
-                
+
                 this.openMenus = this.menuCache
                 this.$nextTick(() => {
                     this.$refs.asideMenu.updateOpened()
@@ -405,17 +409,17 @@ export default {
                     this.isShowRouter = false
                     this.tagsArry.splice(index, 1)
                     this.$nextTick(() => {
-                        this.tagsArry.splice(index, 0, {name, text: this.nameToTitle[name]})
+                        this.tagsArry.splice(index, 0, { name, text: this.nameToTitle[name] })
                         this.gotoPage(name)
                         this.isShowRouter = true
                     })
                 } else {
                     this.isShowRouter = false
                     this.$nextTick(() => {
-                        this.tagsArry.push({name, text: this.nameToTitle[name]})
+                        this.tagsArry.push({ name, text: this.nameToTitle[name] })
                         this.gotoPage(name)
                         this.isShowRouter = true
-                    })           
+                    })
                 }
             })
         },
@@ -423,7 +427,7 @@ export default {
         closeTag(i) {
             let name = this.tagsArry[i].name
             this.tagsArry.splice(i, 1)
-            event.stopPropagation()
+            window.event.stopPropagation()
             // 如果关闭的是当前标签 则激活前一个标签
             // 如果关闭的是第一个标签 则激活后一个标签
             if (this.tagsArry.length) {
@@ -434,13 +438,11 @@ export default {
                         this.gotoPage(this.tagsArry[i].name)
                     }
                 }
-            } else {
+            } else if (name != this.home) {
                 // 如果没有标签则跳往首页
-                if (name != this.home) {
-                    this.gotoPage(this.home)
-                } else {
-                    this.reloadPage()
-                }
+                this.gotoPage(this.home)
+            } else {
+                this.reloadPage()
             }
         },
         // 根据路由名称关闭页面
@@ -478,20 +480,20 @@ export default {
                     return h('Button', {
                         attrs: {
                             type: 'info',
-                            size: 'small'
+                            size: 'small',
                         },
                         on: {
                             click() {
                                 // 点击查看跳转到消息页
                                 self.gotoPage('msg')
-                                self.hasNewMsg = false,
+                                self.hasNewMsg = false
                                 self.msgNum = 0
-                            }
-                        }
+                            },
+                        },
                     }, [
                         '点击查看',
                     ])
-                }
+                },
             })
         },
         // 菜单栏改变事件
@@ -501,15 +503,15 @@ export default {
         processNameToTitle(obj, data, text) {
             if (data.name) {
                 obj[data.name] = data.text
-                this.paths[data.name] = text? `${text} / ${data.text}` : data.text
+                this.paths[data.name] = text ? `${text} / ${data.text}` : data.text
             }
             if (data.children) {
                 data.children.forEach(e => {
-                    this.processNameToTitle(obj, e, text? `${text} / ${data.text}` : data.text)
+                    this.processNameToTitle(obj, e, text ? `${text} / ${data.text}` : data.text)
                 })
             }
-        }
-    }
+        },
+    },
 }
 </script>
 

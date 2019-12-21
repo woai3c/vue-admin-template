@@ -7,54 +7,54 @@ const commonRoutes = [
     {
         path: '/login',
         name: 'login',
-        component: () => import('../components/Login.vue')
+        component: () => import('../components/Login.vue'),
     },
     {
         path: '/404',
         name: '404',
-        component: () => import('../components/404.vue')
+        component: () => import('../components/404.vue'),
     },
     { path: '/', redirect: '/home' },
-] 
+]
 
 // 需要通过后台数据来生成的组件
 export const asyncRoutes = {
-    'home': {
+    home: {
         path: 'home',
         name: 'home',
-        component: () => import('../views/Home.vue')
+        component: () => import('../views/Home.vue'),
     },
-    't1': {
+    t1: {
         path: 't1',
         name: 't1',
-        component: () => import('../views/T1.vue')
+        component: () => import('../views/T1.vue'),
     },
-    'password': {
+    password: {
         path: 'password',
         name: 'password',
-        component: () => import('../views/Password.vue')
+        component: () => import('../views/Password.vue'),
     },
-    'msg': {
+    msg: {
         path: 'msg',
         name: 'msg',
-        component: () => import('../views/Msg.vue')
+        component: () => import('../views/Msg.vue'),
     },
-    'userinfo': {
+    userinfo: {
         path: 'userinfo',
         name: 'userinfo',
-        component: () => import('../views/UserInfo.vue')
-    }
+        component: () => import('../views/UserInfo.vue'),
+    },
 }
 
 const createRouter = () => new Router({
-    routes: commonRoutes
+    routes: commonRoutes,
 })
 
 const router = createRouter()
 
 export function resetRouter() {
-  const newRouter = createRouter()
-  router.matcher = newRouter.matcher 
+    const newRouter = createRouter()
+    router.matcher = newRouter.matcher
 }
 
 export default router

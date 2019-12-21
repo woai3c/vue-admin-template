@@ -17,7 +17,7 @@ export function menusToRoutes(data) {
 
     // 最后添加404页面 否则会在登陆成功后跳到404页面
     result.push(
-        {path: '*', redirect: '/404'},
+        { path: '*', redirect: '/404' },
     )
 
     return result

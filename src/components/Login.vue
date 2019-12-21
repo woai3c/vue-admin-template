@@ -26,29 +26,29 @@ export default {
             accountError: '',
             pwdError: '',
             isShowLoading: false,
-            bg: {}
+            bg: {},
         }
     },
     created() {
-        this.bg.backgroundImage = 'url(' + require('../assets/imgs/bg0' + new Date().getDay() + '.jpg') + ')'
+        this.bg.backgroundImage = 'url(' + import('../assets/imgs/bg0' + new Date().getDay() + '.jpg') + ')'
     },
     watch: {
         $route: {
-            handler: function(route) {
+            handler(route) {
                 this.redirect = route.query && route.query.redirect
             },
-            immediate: true
-        }
+            immediate: true,
+        },
     },
     methods: {
-        verifyAccount(e) {
+        verifyAccount() {
             if (this.account !== 'admin') {
                 this.accountError = '账号为admin'
             } else {
                 this.accountError = ''
             }
         },
-        verifyPwd(e) {
+        verifyPwd() {
             if (this.pwd !== 'admin') {
                 this.pwdError = '密码为admin'
             } else {
@@ -69,18 +69,18 @@ export default {
                 localStorage.setItem('userName', '小明')
                 // 登陆成功 假设这里是后台返回的 token
                 localStorage.setItem('token', 'i_am_token')
-                this.$router.push({path: this.redirect || '/'})
+                this.$router.push({ path: this.redirect || '/' })
             } else {
                 if (this.account !== 'admin') {
                     this.accountError = '账号为admin'
-                } 
+                }
 
                 if (this.pwd !== 'admin') {
                     this.pwdError = '密码为admin'
-                } 
+                }
             }
-        }
-    }
+        },
+    },
 }
 </script>
 
@@ -149,5 +149,3 @@ export default {
     color: #777;
 }
 </style>
-
-
