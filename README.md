@@ -61,6 +61,9 @@ export default {
 #### [jest 单元测试](https://vue-test-utils.vuejs.org/zh/guides/testing-single-file-components-with-jest.html)
 如果不需要，请卸载相关依赖及删除根目录下的 `tests` 目录
 
+#### 页面标题 `document.title`
+在 `src/utils/index` 下可设置默认的 `title`，在每个路由文件上可设置对应的 `title`，具体示例请看代码
+
 #### 其它
 * 利用`axios`拦截器 实现了`ajax`请求前展示`loading` 请求结束关闭`loading`
 
