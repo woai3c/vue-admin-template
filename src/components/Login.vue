@@ -56,10 +56,10 @@ export default {
             }
         },
         register() {
-            console.log('注册账号')
+
         },
         forgetPwd() {
-            console.log('忘记密码')
+
         },
         submit() {
             if (this.account === 'admin' && this.pwd === 'admin') {
