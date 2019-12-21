@@ -1,4 +1,10 @@
 ## 更新日志
+### 2019.12.21 更新
+* refactor: 将 `404` 页面独立出来，单独展示（占满屏幕）
+* new: [新增 eslint，配合 vscode 可以自动格式化代码](https://github.com/woai3c/Front-end-articles/blob/master/eslint-vscode-format.md)
+* new: 新增 jest 单元测试
+以上两项更新均需单独学习。
+
 ### 2019.12.13 更新
 * fix: 修复在IE下关闭标签栏时，页面抖动的问题
 * refactor: 同时将左右两栏的布局方式从 flex 布局更改为 fixed + margin 的方式
