@@ -9,7 +9,12 @@ const commonRoutes = [
         name: 'login',
         component: () => import('../components/Login.vue')
     },
-    {path: '/', redirect: '/home'},
+    {
+        path: '/404',
+        name: '404',
+        component: () => import('../components/404.vue')
+    },
+    { path: '/', redirect: '/home' },
 ] 
 
 // 需要通过后台数据来生成的组件

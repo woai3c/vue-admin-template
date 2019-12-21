@@ -158,6 +158,8 @@ export default {
             crumbs: '主页',
             userName: '',
             userImg: '',
+            // 主页路由名称
+            home: 'home',
         }
     },
     created() {
@@ -434,8 +436,8 @@ export default {
                 }
             } else {
                 // 如果没有标签则跳往首页
-                if (name != 'home') {
-                    this.gotoPage('home')
+                if (name != this.home) {
+                    this.gotoPage(this.home)
                 } else {
                     this.reloadPage()
                 }
@@ -459,7 +461,7 @@ export default {
             } else {
                 // 关闭所有标签
                 this.tagsArry = []
-                this.gotoPage('home')
+                this.gotoPage(this.home)
                 this.reloadPage()
             }
         },
@@ -548,7 +550,7 @@ aside {
     margin-left: 220px;
     transition: margin-left .3s;
     overflow: hidden;;
-    background: #eee;
+    background: #f3f7fd;
 }
 /* 主体页面头部 */
 header {
@@ -668,14 +670,13 @@ a {
 }
 /* 主要内容区域 */
 .main-content {
-    overflow: auto;
-    height: 100%;
-    background: #eee;
+    height: calc(100% - 88px);
+    overflow: hidden;
 }
 .view-c {
     position: relative;
-    background: #fff;
-    padding: 15px;
+    height: 100%;
+    overflow: hidden;
 }
 .pointer {
     cursor: pointer;

@@ -15,15 +15,9 @@ export function menusToRoutes(data) {
         generateRoutes(children, item)
     })
 
-    children.push({
-        path: 'error',
-        name: 'error',
-        component: () => import('../components/Error.vue')
-    })
-
     // 最后添加404页面 否则会在登陆成功后跳到404页面
     result.push(
-        {path: '*', redirect: '/error'},
+        {path: '*', redirect: '/404'},
     )
 
     return result
