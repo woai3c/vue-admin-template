@@ -3,7 +3,7 @@
 * refactor: 将 `404` 页面独立出来，单独展示（占满屏幕）
 * new: [新增 eslint，配合 vscode 可以自动格式化代码](https://github.com/woai3c/Front-end-articles/blob/master/eslint-vscode-format.md)
 * new: 新增 jest 单元测试
-* new: 页面标题 `document.title`，在 `src/utils/index` 下可设置默认的 `title`，在每个路由文件上可设置对应的 `title`，具体示例请看代码
+* new: 页面标题 `document.title`，在 `src/utils/index` 下可设置默认的 `title`，在每个路由配置项上可设置对应的 `title`，具体示例请看代码
 
 ### 2019.12.13 更新
 * fix: 修复在IE下关闭标签栏时，页面抖动的问题
