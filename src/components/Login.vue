@@ -30,7 +30,7 @@ export default {
         }
     },
     created() {
-        this.bg.backgroundImage = 'url(' + import('../assets/imgs/bg0' + new Date().getDay() + '.jpg') + ')'
+        this.bg.backgroundImage = 'url(' + require('../assets/imgs/bg0' + new Date().getDay() + '.jpg') + ')'
     },
     watch: {
         $route: {

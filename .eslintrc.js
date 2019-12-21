@@ -43,6 +43,7 @@ module.exports = {
         'import/named': 'off',
         'object-curly-newline': 'off',
         'default-case': 'off',
+        'import/no-dynamic-require': 'off',
     },
     parserOptions: {
         parser: 'babel-eslint',
