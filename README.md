@@ -55,6 +55,12 @@ export default {
 #### 权限控制
 * 如果在未登陆的情况下访问指定页面 将会重定向到登陆页
 
+#### [eslint + vscode 自动格式化代码](https://github.com/woai3c/Front-end-articles/blob/master/eslint-vscode-format.md)
+具体配置方法请点击上面的链接，如果不需要 eslint，请将相关依赖卸载以及根目录下的 `.eslintrc.js` 删除。
+
+#### [jest 单元测试](https://vue-test-utils.vuejs.org/zh/guides/testing-single-file-components-with-jest.html)
+如果不需要，请卸载相关依赖及删除根目录下的 `tests` 目录
+
 #### 其它
 * 利用`axios`拦截器 实现了`ajax`请求前展示`loading` 请求结束关闭`loading`
 
@@ -66,20 +72,6 @@ export default {
 
 市面上有大量的vue后台管理系统模板 但是功能都太丰富了 而且有很多组件用不上 所以写了这么一个最基础的 只有必要功能的模板
 UI库使用的是`iView` 有大量的组件可用 
-
-### 子组件跳转到子组件
-```
-// xxx为你想跳转的子组件name
-this.$parent.gotoPage('xxx')
-```
-### 路由传参
-```
-this.gotoPage('userinfo', {
-    id: id,
-})
-// 在userinfo组件里取参
-this.$route.params.id
-```
 
 ## 使用
 #### 下载
