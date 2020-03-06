@@ -79,7 +79,7 @@ UI库使用的是`iView` 有大量的组件可用
 ## 使用
 #### 下载
 ```
-git clone git@github.com:woai3c/vue-admin-template.git
+git clone https://github.com/woai3c/vue-admin-template.git
 
 cd vue-admin-template
 
