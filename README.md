@@ -1,15 +1,14 @@
-# vue-admin-template
-vue轻量级后台管理系统基础模板<br>
-[在线预览](https://woai3c.github.io)
-## [更新日志](https://github.com/woai3c/vue-admin-template/blob/master/update.md)
+# vue轻量级后台管理系统基础模板
 
-## 相关依赖
+### [在线预览](https://woai3c.github.io)
+### [更新日志](https://github.com/woai3c/vue-admin-template/blob/master/update.md)
+### 相关依赖
 * [vue-router](https://router.vuejs.org/zh/)
 * [iview](https://www.iviewui.com/docs/guide/install)
 * [axios](https://www.kancloud.cn/yunye/axios/234845)
 * [vuex](https://vuex.vuejs.org/zh/)
 
-## 功能
+### 功能
 
 #### 登录页
 * 一周七天自动切换不同的壁纸（建议自己配置）
@@ -67,7 +66,7 @@ export default {
 #### 其它
 * 利用`axios`拦截器 实现了`ajax`请求前展示`loading` 请求结束关闭`loading`
 
-## 注意
+### 注意
 * 源码可见 并且添加了必要的注释 可以自行更改
 
 
@@ -76,7 +75,7 @@ export default {
 市面上有大量的vue后台管理系统模板 但是功能都太丰富了 而且有很多组件用不上 所以写了这么一个最基础的 只有必要功能的模板
 UI库使用的是`iView` 有大量的组件可用 
 
-## 使用
+### 使用
 #### 下载
 ```
 git clone https://github.com/woai3c/vue-admin-template.git
