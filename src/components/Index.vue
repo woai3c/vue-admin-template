@@ -23,24 +23,54 @@
                                     <Icon :size="subItem.size" :type="subItem.type"/>
                                     <span v-show="isShowAsideTitle">{{subItem.text}}</span>
                                 </template>
-                                <MenuItem :class="isShowAsideTitle? '' : 'shrink'" class="menu-level-3"
-                                v-for="(threeItem, k) in subItem.children" :name="threeItem.name" :key="index + i + k">
-                                    <template v-if="!threeItem.hidden">
-                                        <Icon :size="threeItem.size" :type="threeItem.type"/>
-                                        <span v-show="isShowAsideTitle">{{threeItem.text}}</span>
-                                    </template>
-                                </MenuItem>
+                                <template v-for="(threeItem, k) in subItem.children">
+                                    <a href="https://www.baidu.com" target="_blank" :key="index + i + k" v-if="threeItem.isExternal">
+                                        <MenuItem :class="isShowAsideTitle? '' : 'shrink'" class="menu-level-3"
+                                        :name="'external-link-' + index + i + k">
+                                            <template v-if="!threeItem.hidden">
+                                                <a :href="threeItem.url" target="_blank" class="external">
+                                                    <Icon :size="threeItem.size" :type="threeItem.type"/>
+                                                    <span v-show="isShowAsideTitle">{{threeItem.text}}</span>
+                                                </a>
+                                            </template>
+                                        </MenuItem>
+                                    </a>
+                                    <MenuItem v-else :class="isShowAsideTitle? '' : 'shrink'" class="menu-level-3"
+                                    :name="threeItem.name" :key="index + i + k">
+                                        <template v-if="!threeItem.hidden">
+                                            <Icon :size="threeItem.size" :type="threeItem.type"/>
+                                            <span v-show="isShowAsideTitle">{{threeItem.text}}</span>
+                                        </template>
+                                    </MenuItem>
+                                </template>
                             </Submenu>
-                            <MenuItem :class="isShowAsideTitle? '' : 'shrink'" v-else-if="!subItem.hidden" :name="subItem.name">
-                                <Icon :size="subItem.size" :type="subItem.type"/>
-                                <span v-show="isShowAsideTitle">{{subItem.text}}</span>
-                            </MenuItem>
+                            <template v-else-if="!subItem.hidden">
+                                <a :href="subItem.url" v-if="subItem.isExternal" target="_blank" class="external">
+                                    <MenuItem :class="isShowAsideTitle? '' : 'shrink'"
+                                    :name="'external-link-' + index + '-' + i">
+                                        <Icon :size="subItem.size" :type="subItem.type"/>
+                                        <span v-show="isShowAsideTitle">{{subItem.text}}</span>
+                                    </MenuItem>
+                                </a>
+                                <MenuItem v-else :class="isShowAsideTitle? '' : 'shrink'" :name="subItem.name">
+                                    <Icon :size="subItem.size" :type="subItem.type"/>
+                                    <span v-show="isShowAsideTitle">{{subItem.text}}</span>
+                                </MenuItem>
+                            </template>
                         </div>
                     </Submenu>
-                    <MenuItem :class="isShowAsideTitle? '' : 'shrink'" v-else-if="!item.hidden" :name="item.name">
-                        <Icon :size="item.size" :type="item.type" />
-                        <span v-show="isShowAsideTitle">{{item.text}}</span>
-                    </MenuItem>
+                    <template v-else-if="!item.hidden">
+                        <a :href="item.url" v-if="item.isExternal" target="_blank" class="external">
+                            <MenuItem :class="isShowAsideTitle? '' : 'shrink'" :name="'external-link-' + index">
+                                    <Icon :size="item.size" :type="item.type"/>
+                                    <span v-show="isShowAsideTitle">{{item.text}}</span>
+                            </MenuItem>
+                        </a>
+                        <MenuItem v-else :class="isShowAsideTitle? '' : 'shrink'" :name="item.name">
+                            <Icon :size="item.size" :type="item.type" />
+                            <span v-show="isShowAsideTitle">{{item.text}}</span>
+                        </MenuItem>
+                    </template>
                 </div>
             </Menu>
         </aside>
@@ -331,6 +361,7 @@ export default {
         },
         // 选择菜单回调函数
         selectMenuCallback(name) {
+            if (name.includes('external-link')) return
             this.gotoPage(name)
             this.expandAside()
             setTimeout(() => {
@@ -707,5 +738,11 @@ a {
 }
 .shrink {
     text-align: center;
+}
+.external {
+    color: rgba(255,255,255,.7);
+}
+.external > i {
+    margin-right: 6px;
 }
 </style>

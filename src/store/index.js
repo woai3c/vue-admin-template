@@ -16,8 +16,15 @@ const store = new Vuex.Store({
             {
                 name: 'other', // 要跳转的路由名称 不是路径
                 size: 18, // icon大小
-                type: 'md-home', // icon类型
-                text: '单独的路由', // 文本内容
+                type: 'ios-egg-outline', // icon类型
+                text: '单独的路由', // 点击侧边栏跳到一个单独的路由页面，需要提前在 router.js 定义
+            },
+            {
+                size: 18, // icon大小
+                type: 'md-arrow-forward', // icon类型
+                text: '外链',
+                url: 'https://www.baidu.com',
+                isExternal: true, // 外链 跳到一个外部的 URL 页面
             },
             {
                 text: '二级菜单',
@@ -29,6 +36,13 @@ const store = new Vuex.Store({
                         text: '表格',
                         // hidden 属性 隐藏此菜单 可以通过在地址栏上输入对应的 URL 来显示页面
                         // hidden: true,
+                    },
+                    {
+                        size: 18, // icon大小
+                        type: 'md-arrow-forward', // icon类型
+                        text: '外链',
+                        url: 'https://www.baidu.com',
+                        isExternal: true, // 外链 跳到一个外部的 URL 页面
                     },
                     {
                         text: '三级菜单',
@@ -48,6 +62,13 @@ const store = new Vuex.Store({
                                 type: 'md-person',
                                 name: 'userinfo',
                                 text: '基本资料',
+                            },
+                            {
+                                size: 18, // icon大小
+                                type: 'md-arrow-forward', // icon类型
+                                text: '外链',
+                                url: 'https://www.baidu.com',
+                                isExternal: true, // 外链 跳到一个外部的 URL 页面
                             },
                         ],
                     },
