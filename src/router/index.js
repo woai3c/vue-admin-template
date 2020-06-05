@@ -11,6 +11,12 @@ const commonRoutes = [
         component: () => import('../components/Login.vue'),
     },
     {
+        path: '/other',
+        name: 'other',
+        meta: { title: '单独的路由' },
+        component: () => import('../views/Other.vue'),
+    },
+    {
         path: '/404',
         name: '404',
         meta: { title: '404' },

@@ -14,6 +14,12 @@ const store = new Vuex.Store({
                 text: '主页', // 文本内容
             },
             {
+                name: 'other', // 要跳转的路由名称 不是路径
+                size: 18, // icon大小
+                type: 'md-home', // icon类型
+                text: '单独的路由', // 文本内容
+            },
+            {
                 text: '二级菜单',
                 type: 'ios-paper',
                 children: [

@@ -319,7 +319,7 @@ export default {
         gotoPage(name, params) {
             this.currentPage = name
             this.crumbs = this.paths[name]
-            this.$router.replace({ name, params })
+            this.$router.push({ name, params })
 
             if (!this.keepAliveData.includes(name)) {
                 // 如果标签超过8个 则将第一个标签删除
@@ -350,7 +350,7 @@ export default {
                     break
                 case '3':
                     resetTokenAndClearUser()
-                    this.$router.replace({ name: 'login' })
+                    this.$router.push({ name: 'login' })
                     break
             }
         },
@@ -376,7 +376,9 @@ export default {
             this.isShowAsideTitle = false
             this.openMenus = []
             this.$nextTick(() => {
-                this.$refs.asideMenu.updateOpened()
+                if (this.$refs.asideMenu) {
+                    this.$refs.asideMenu.updateOpened()
+                }
             })
 
             setTimeout(() => {
@@ -393,9 +395,9 @@ export default {
                 }
 
                 this.openMenus = this.menuCache
-                this.$nextTick(() => {
+                if (this.$refs.asideMenu) {
                     this.$refs.asideMenu.updateOpened()
-                })
+                }
             }, 200)
             this.asideClassName = 'aside-big'
             this.main.style.marginLeft = '220px'
