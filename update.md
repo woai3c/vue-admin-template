@@ -1,4 +1,9 @@
 ## 更新日志
+### 2020.6.5 更新
+* new: 新增外链功能，点击菜单可以跳到一个新页面，地址为指定的 URL。
+* new: 新增独立路由页面功能，点击侧边栏可以跳转到单独的路由页面（铺满屏幕，顶级路由）。
+
+具体示例请查看源码 `src/store/index` 和 [demo](https://woai3c.github.io/)
 ### 2019.12.21 更新
 * refactor: 将 `404` 页面独立出来，单独展示（占满屏幕）
 * new: [新增 eslint，配合 vscode 可以自动格式化代码](https://github.com/woai3c/Front-end-articles/blob/master/eslint-vscode-format.md)
