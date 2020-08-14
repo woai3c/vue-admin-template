@@ -1,4 +1,7 @@
 ## 更新日志
+### 2020.8.14 更新
+* new: loading 从 `components/Index.vue` 挪到了 `App.vue`。axios 从 `components/Index.vue` 挪到了 `utils/request.js`，并对其进行了封装，方便复用。
+* new: 重构了 loading 和 axios 拦截器使用方式，并提供了一个 ajax DEMO 放在首页。
 ### 2020.6.5 更新
 * new: 新增外链功能，点击菜单可以跳到一个新页面，地址为指定的 URL。
 * new: 新增独立路由页面功能，点击侧边栏可以跳转到单独的路由页面（铺满屏幕，顶级路由）。
