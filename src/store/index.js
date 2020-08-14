@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
+        isShowLoading: false, // 全局 loading
         // 左侧菜单栏数据
         menuItems: [
             {
@@ -79,6 +80,9 @@ const store = new Vuex.Store({
     mutations: {
         setMenus(state, items) {
             state.menuItems = [...items]
+        },
+        setLoading(state, isShowLoading) {
+            state.isShowLoading = isShowLoading
         },
     },
 })

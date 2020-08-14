@@ -148,9 +148,6 @@
                         <!-- 子页面 -->
                         <router-view v-if="isShowRouter"/>
                     </keep-alive>
-                    <div class="loading-c" v-show="showLoading">
-                        <Spin size="large"></Spin>
-                    </div>
                 </div>
             </div>
         </section>
@@ -170,7 +167,6 @@ export default {
             currentPage: '',
             openMenus: [], // 要打开的菜单名字 name属性
             menuCache: [], // 缓存已经打开的菜单
-            showLoading: false, // 是否显示loading
             hasNewMsg: true, // 是否有新消息
             isShowRouter: true,
             msgNum: '10', // 新消息条数
@@ -191,36 +187,6 @@ export default {
             // 主页路由名称
             home: 'home',
         }
-    },
-    created() {
-        // 已经为ajax请求设置了loading 请求前自动调用 请求完成自动结束
-        // 添加请求拦截器
-        this.$axios.interceptors.request.use(config => {
-            this.showLoading = true
-            // 在发送请求之前做些什么
-            return config
-        }, error => {
-            this.showLoading = false
-            // 对请求错误做些什么
-            return Promise.reject(error)
-        })
-        // 添加响应拦截器
-        this.$axios.interceptors.response.use(response => {
-            // 可以在这里对返回的数据进行错误处理 如果返回的 code 不对 直接报错或退出登陆
-            // 就可以省去在业务代码里重复判断
-            // 例子
-            // if (res.code != 0) {
-            //     this.$Message.error(res.msg)
-            //     return Promise.reject()
-            // }
-            this.showLoading = false
-            const res = response.data
-            return res
-        }, error => {
-            this.showLoading = false
-            // 对响应错误做点什么
-            return Promise.reject(error)
-        })
     },
     mounted() {
         // 第一个标签
@@ -715,18 +681,6 @@ a {
 }
 .pointer {
     cursor: pointer;
-}
-/* loading */
-.loading-c {
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background: rgba(255,255,255,.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 .crumbs {
     margin-left: 10px;
