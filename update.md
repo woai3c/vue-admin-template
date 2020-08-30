@@ -1,4 +1,6 @@
 ## 更新日志
+### 2020.8.30 更新
+* build: 打包后的文件从绝对路径改成相对路径，也就是说打包后的文件不能放在服务器根目录下。
 ### 2020.8.14 更新
 * new: loading 从 `components/Index.vue` 挪到了 `App.vue`。axios 从 `components/Index.vue` 挪到了 `utils/request.js`，并对其进行了封装，方便复用。
 * new: 重构了 loading 和 axios 拦截器使用方式，并提供了一个 ajax DEMO 放在首页。
