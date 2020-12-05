@@ -101,4 +101,8 @@ npm run build
 publicPath: './',
 ```
 
-### 如果对你有帮助，请给个Star
+## License
+MIT
+## 赞助
+![](https://github.com/woai3c/nand2tetris/blob/master/img/wx.jpg)
+![](https://github.com/woai3c/nand2tetris/blob/master/img/zfb.jpg)
