@@ -1,8 +1,8 @@
 <template>
-    <el-container style="height: 900px">
+    <el-container :style="note">
         <el-main>
             <el-row>
-                <el-col :span="12">
+                <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <ul class="ul1">
                             <li class="li_title title">
@@ -20,7 +20,25 @@
                         </ul>
                     </div>
                 </el-col>
-                <el-col :span="12">
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <ul class="ul1">
+                            <li class="li_title title">
+                                <span class="dianzan_title">菜品</span>
+                                <span class="dianzan1_title">点赞排行</span>
+                            </li>
+                            <el-scrollbar style='height:100%'>
+                                <template v-for="(item,index) in dianzanlist">
+                                    <li v-if="index>=10" :key="index" class="li1">
+                                        <span class="dianzan" >{{item.name}}</span>
+                                        <span class="dianzan1">{{item.num}}</span>
+                                    </li>
+                                </template>
+                            </el-scrollbar>
+                        </ul>
+                    </div>
+                </el-col>
+                <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <ul class="ul1">
                             <li class="li_title title">
@@ -40,7 +58,7 @@
                 </el-col>
             </el-row>
             <el-row>
-                <el-col :span="12">
+                <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <ul class="ul2">
                             <li class="li_title title">
@@ -65,12 +83,7 @@
                                         <div class="caiping2">
                                             <template>
                                                 <div class="block" @click="dianzan(item.id)">
-                                                    <el-avatar
-                                                        fit="fill"
-                                                        shape="square"
-                                                        :size="50" :src="dianzanimg"
-                                                    >
-                                                    </el-avatar>
+                                                    <img class="img_dianzan" :src="dianzanimg"/>
                                                 </div>
                                             </template>
                                         </div>
@@ -80,7 +93,42 @@
                         </ul>
                     </div>
                 </el-col>
-                <el-col :span="12">
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <ul class="ul2">
+                            <li class="li_title title">
+                                <span class="caiping_title">秀色可餐</span>
+                                <span class="caiping1_title">菜品</span>
+                                <span class="caiping2_title">点赞</span>
+                            </li>
+                            <el-scrollbar style='height:100%'>
+                                <template v-for="(item,index) in caipinglist">
+                                    <li v-if="index<10" :key="index" class="li2">
+                                        <template>
+                                            <div class="block caiping">
+                                                <el-avatar
+                                                    fit="fill"
+                                                    shape="square"
+                                                    :size="100"
+                                                    :src="item.imgpath">
+                                                </el-avatar>
+                                            </div>
+                                        </template>
+                                        <span class="caiping1" >{{item.name}}</span>
+                                        <div class="caiping2">
+                                            <template>
+                                                <div class="block" @click="dianzan(item.id)">
+                                                    <img class="img_dianzan" :src="dianzanimg"/>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </li>
+                                </template>
+                            </el-scrollbar>
+                        </ul>
+                    </div>
+                </el-col>
+                <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <ul class="ul2">
                             <li class="li_title title">
@@ -100,12 +148,7 @@
                                         <div class="caiping2">
                                             <template>
                                                 <div class="block" @click="dianzan(item.id)">
-                                                    <el-avatar
-                                                        fit="fill"
-                                                        shape="square"
-                                                        :size="50" :src="dianzanimg"
-                                                    >
-                                                    </el-avatar>
+                                                    <img class="img_dianzan" :src="dianzanimg"/>
                                                 </div>
                                             </template>
                                         </div>
@@ -181,10 +224,13 @@ export default {
     name: 'other',
     data() {
         return {
-            dianzanimg: require('./dianzan.jpg'),
+            dianzanimg: require('./hongxin.png'),
             dianzanlist: [],
             caipinglist: [],
             isShow: true,
+            note: {
+                backgroundImage: 'url(' + require('./1.jpg') + ')',
+            },
         }
     },
     watch: {
@@ -198,7 +244,7 @@ export default {
             let wbout = XLSX.write(wb, {
                 bookType: 'xlsx',
                 bookSST: true,
-                type: 'array'
+                type: 'array',
             })
             try {
                 FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream;charset=utf-8' }),
@@ -206,7 +252,7 @@ export default {
             } catch (e) {
                 if (typeof console !== 'undefined') console.log(e, wbout)
             }
-            return wbout; //https://my.oschina.net/u/4365632/blog/3319613
+            return wbout
         },
         saveToExcel() {
             const th = ['菜单', '点赞数量']
@@ -246,7 +292,7 @@ export default {
                     pic: val['图片地址'],
                     name: val['菜名'],
                     price: val['价格'],
-                    picpath: import('../assets/imgs/' + val['图片地址']),
+                    picpath: val['图片地址'],
                 }
                 console.log(newcaiping.picpath)
                 this.caipinglist.push(newcaiping)
@@ -259,23 +305,27 @@ export default {
 </script>
 
 <style>
+.img_dianzan {
+    height: 80px;
+    width:80px;
+}
 .title {
-    background-color: rgb(214, 232, 248);
+    background-color: rgba(255, 218, 185, 0.9);
     font-family: "微软雅黑";
     font-weight: 600;
 }
 .ul1 {
-    height: 200px;
+    height: 600px;
 }
 .li1 {
-    height: 30px;
+    height: 50px;
     width: 100%;
     line-height: 30px;
     text-align: center;
     position: relative;
 }
 .ul2 {
-    height: 700px;
+    height: 100%;
 }
 .li_title {
     height: 50px;
@@ -352,14 +402,14 @@ export default {
     margin: -25px -50px;
 }
 .dianzan {
-    font-size: 20px;
+    font-size: 30px;
     position: absolute;
     top: 50%;
     left: 25%;
     margin: -15px 20px;
 }
 .dianzan1 {
-    font-size: 20px;
+    font-size: 30px;
     position: absolute;
     top: 50%;
     left: 75%;
@@ -369,7 +419,7 @@ export default {
   border-radius: 4px;
 }
 .bg-purple {
-  background: #fff5f5;
+  background-color: rgba(255, 250, 240, 0.8);
 }
 .grid-content {
   border-radius: 4px;
