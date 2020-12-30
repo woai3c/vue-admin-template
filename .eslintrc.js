@@ -16,7 +16,7 @@ module.exports = {
         'comma-dangle': ['error', 'always-multiline'],
         'semi': ['error', 'never'],
         'object-curly-spacing': ['error', 'always'],
-        'max-len': ['error', 140],
+        'max-len': ['error', 300],
         'no-new': 'off',
         'linebreak-style': 'off',
         'import/extensions': 'off',
@@ -44,6 +44,7 @@ module.exports = {
         'object-curly-newline': 'off',
         'default-case': 'off',
         'import/no-dynamic-require': 'off',
+        "class-methods-use-this": "off",
     },
     parserOptions: {
         parser: 'babel-eslint',

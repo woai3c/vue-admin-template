@@ -1,0 +1,45 @@
+body {
+  background-color: rgba(255, 137, 164, 0.2);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.liker {
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+.liker span {
+  position: absolute;
+  font-family: monospace;
+  color: #F92A82;
+  bottom: -70px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.btn {
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  position: absolute;
+  cursor: pointer;
+  left: 50%;
+  transform: translate(-50%, -10%);
+  background-color: #FF4D80;
+  color: #fff;
+  outline: none;
+  transition: 0.3s ease;
+  box-shadow: 0 3px 10px #F92A82;
+}
+.btn svg {
+  fill: #fff;
+}
+.btn:hover {
+  background-color: #F92A82;
+}
