@@ -237,25 +237,6 @@ export default {
     mounted() {
     },
     methods: {
-<<<<<<< HEAD
-=======
-        exportExcel() {
-            let xlsxParam = { raw: true }
-            let wb = XLSX.utils.table_to_book(document.querySelector('#outTable'), xlsxParam)
-            let wbout = XLSX.write(wb, {
-                bookType: 'xlsx',
-                bookSST: true,
-                type: 'array',
-            })
-            try {
-                FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream;charset=utf-8' }),
-                    'sheetjs.xlsx')
-            } catch (e) {
-                if (typeof console !== 'undefined') console.log(e, wbout)
-            }
-            return wbout
-        },
->>>>>>> 13a75303868a0312675c508d1620b7de059e2b5d
         saveToExcel() {
             const th = ['菜单', '点赞数量']
             const val = ['name', 'num']
