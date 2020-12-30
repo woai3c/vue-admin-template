@@ -172,7 +172,6 @@
     </el-container>
 </template>
 <script>
-import FileSaver from 'file-saver'
 import toExcel from './json2excel'
 
 let XLSX = require('xlsx')
@@ -192,22 +191,6 @@ export default {
     mounted() {
     },
     methods: {
-        exportExcel() {
-            let xlsxParam = { raw: true }
-            let wb = XLSX.utils.table_to_book(document.querySelector('#outTable'), xlsxParam)
-            let wbout = XLSX.write(wb, {
-                bookType: 'xlsx',
-                bookSST: true,
-                type: 'array'
-            })
-            try {
-                FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream;charset=utf-8' }),
-                    'sheetjs.xlsx')
-            } catch (e) {
-                if (typeof console !== 'undefined') console.log(e, wbout)
-            }
-            return wbout; //https://my.oschina.net/u/4365632/blog/3319613
-        },
         saveToExcel() {
             const th = ['菜单', '点赞数量']
             const val = ['name', 'num']
