@@ -1,8 +1,8 @@
 <template>
     <el-container :style="note">
-        <el-main>
+        <el-main id="saveData" @touchstart="saveData()">
             <el-row>
-                <el-col :span="6">
+                <el-col :span="8">
                     <div class="grid-content bg-purple"
                      @mousedown="holdDown()" @mouseup="holdUp()">
                         <ul class="ul1">
@@ -10,9 +10,9 @@
                                 <span class="dianzan_title">菜品</span>
                                 <span class="dianzan1_title">点赞排行</span>
                             </li>
-                            <el-scrollbar style='height:100%'>
+                            <el-scrollbar style='height:90%'>
                                 <template v-for="(item,index) in dianzanlist">
-                                    <li v-if="index<8" :key="index" class="li1">
+                                    <li v-if="index<10" :key="index" class="li1">
                                         <span class="dianzan" >{{item.names}}</span>
                                         <span class="dianzan1">{{item.num}}</span>
                                     </li>
@@ -21,7 +21,7 @@
                         </ul>
                     </div>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="8">
                     <div class="grid-content bg-purple"
                      @mousedown="holdDown()" @mouseup="holdUp()">
                         <ul class="ul1">
@@ -29,9 +29,9 @@
                                 <span class="dianzan_title">菜品</span>
                                 <span class="dianzan1_title">点赞排行</span>
                             </li>
-                            <el-scrollbar style='height:100%'>
+                            <el-scrollbar style='height:90%'>
                                 <template v-for="(item,index) in dianzanlist">
-                                    <li v-if="index<16 && index>=8" :key="index" class="li1">
+                                    <li v-if="index<20 && index>=10" :key="index" class="li1">
                                         <span class="dianzan" >{{item.names}}</span>
                                         <span class="dianzan1">{{item.num}}</span>
                                     </li>
@@ -40,7 +40,7 @@
                         </ul>
                     </div>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="8">
                     <div class="grid-content bg-purple"
                      @mousedown="holdDown()" @mouseup="holdUp()">
                         <ul class="ul1">
@@ -48,28 +48,9 @@
                                 <span class="dianzan_title">菜品</span>
                                 <span class="dianzan1_title">点赞排行</span>
                             </li>
-                            <el-scrollbar style='height:100%'>
+                            <el-scrollbar style='height:90%'>
                                 <template v-for="(item,index) in dianzanlist">
-                                    <li v-if="index<24 && index>=16" :key="index" class="li1">
-                                        <span class="dianzan" >{{item.names}}</span>
-                                        <span class="dianzan1">{{item.num}}</span>
-                                    </li>
-                                </template>
-                            </el-scrollbar>
-                        </ul>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content bg-purple"
-                     @mousedown="holdDown()" @mouseup="holdUp()">
-                        <ul class="ul1">
-                            <li class="li_title title">
-                                <span class="dianzan_title">菜品</span>
-                                <span class="dianzan1_title">点赞排行</span>
-                            </li>
-                            <el-scrollbar style='height:100%'>
-                                <template v-for="(item,index) in dianzanlist">
-                                    <li v-if="index>=24" :key="index" class="li1">
+                                    <li v-if="index>=20" :key="index" class="li1">
                                         <span class="dianzan" >{{item.names}}</span>
                                         <span class="dianzan1">{{item.num}}</span>
                                     </li>
@@ -80,7 +61,7 @@
                 </el-col>
             </el-row>
             <el-row>
-                <el-col :span="6">
+                <el-col :span="8">
                     <div class="grid-content bg-purple"
                      @mousedown="holdDown()" @mouseup="holdUp()">
                         <ul class="ul2">
@@ -88,12 +69,17 @@
                                 <span class="caiping1_title">菜品</span>
                                 <span class="caiping2_title">点赞</span>
                             </li>
-                            <el-scrollbar style='height:100%'>
+                            <el-scrollbar style='height:80%'>
                                 <template v-for="(item,index) in caipinglist">
-                                    <li v-if="index<8" :key="index" class="li2">
+                                    <li v-if="index<10" :key="index" class="li2">
                                         <span class="caiping1" >{{item.names}}</span>
-                                        <div class="caiping2" @click="dianzan(item.mid)">
-                                            <img class="img_dianzan" :src="dianzanimg"/>
+                                        <div class="caiping2 ClickLike-box"
+                                            @click="dianzan(item.mid)">
+                                            <img
+                                            class="img_dianzan"
+                                            :src="dianzanimg"/>
+                                            <div class="animate"
+                                            v-show="item.ClickLike_Status"></div>
                                         </div>
                                     </li>
                                 </template>
@@ -101,7 +87,7 @@
                         </ul>
                     </div>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="8">
                     <div class="grid-content bg-purple"
                      @mousedown="holdDown()" @mouseup="holdUp()">
                         <ul class="ul2">
@@ -109,12 +95,17 @@
                                 <span class="caiping1_title">菜品</span>
                                 <span class="caiping2_title">点赞</span>
                             </li>
-                            <el-scrollbar style='height:100%'>
+                            <el-scrollbar style='height:80%'>
                                 <template v-for="(item,index) in caipinglist">
-                                    <li v-if="index<16 && index>=8" :key="index" class="li2">
+                                    <li v-if="index<20 && index>=10" :key="index" class="li2">
                                         <span class="caiping1" >{{item.names}}</span>
-                                        <div class="caiping2" @click="dianzan(item.mid)">
-                                            <img class="img_dianzan" :src="dianzanimg"/>
+                                        <div class="caiping2 ClickLike-box"
+                                            @click="dianzan(item.mid)">
+                                            <img
+                                            class="img_dianzan"
+                                            :src="dianzanimg"/>
+                                            <div class="animate"
+                                            v-show="item.ClickLike_Status"></div>
                                         </div>
                                     </li>
                                 </template>
@@ -122,7 +113,7 @@
                         </ul>
                     </div>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="8">
                     <div class="grid-content bg-purple"
                      @mousedown="holdDown()" @mouseup="holdUp()">
                         <ul class="ul2">
@@ -130,33 +121,17 @@
                                 <span class="caiping1_title">菜品</span>
                                 <span class="caiping2_title">点赞</span>
                             </li>
-                            <el-scrollbar style='height:100%'>
+                            <el-scrollbar style='height:80%'>
                                 <template v-for="(item,index) in caipinglist">
-                                    <li v-if="index<24 && index>=16" :key="index" class="li2">
+                                    <li v-if="index>=20" :key="index" class="li2">
                                         <span class="caiping1" >{{item.names}}</span>
-                                        <div class="caiping2" @click="dianzan(item.mid)">
-                                            <img class="img_dianzan" :src="dianzanimg"/>
-                                        </div>
-                                    </li>
-                                </template>
-                            </el-scrollbar>
-                        </ul>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="grid-content bg-purple"
-                     @mousedown="holdDown()" @mouseup="holdUp()">
-                        <ul class="ul2">
-                            <li class="li_title title">
-                                <span class="caiping1_title">菜品</span>
-                                <span class="caiping2_title">点赞</span>
-                            </li>
-                            <el-scrollbar style='height:100%'>
-                                <template v-for="(item,index) in caipinglist">
-                                    <li v-if="index>=24" :key="index" class="li2">
-                                        <span class="caiping1" >{{item.names}}</span>
-                                        <div class="caiping2" @click="dianzan(item.mid)">
-                                            <img class="img_dianzan" :src="dianzanimg"/>
+                                        <div class="caiping2 ClickLike-box"
+                                            @click="dianzan(item.mid)">
+                                            <img
+                                            class="img_dianzan"
+                                            :src="dianzanimg"/>
+                                            <div class="animate"
+                                            v-show="item.ClickLike_Status"></div>
                                         </div>
                                     </li>
                                 </template>
@@ -188,17 +163,15 @@
 <script>
 import toExcel from '../utils/json2excel'
 
-require('../utils/style.css')
-
 let XLSX = require('xlsx')
 
 export default {
     name: 'other',
     data() {
         return {
-            dianzanimg: require('../assets/imgs/hongxin.png'),
+            dianzanimg: require('../assets/imgs/dianzan.png'),
             dianzanitem: { mid: 0, names: '', num: 0 },
-            caipingitem: { mid: 0, names: '' },
+            caipingitem: { mid: 0, names: '', ClickLike_Status: false },
             dianzanlist: [],
             caipinglist: [],
             time: setInterval(() => {}),
@@ -214,6 +187,9 @@ export default {
     mounted() {
     },
     methods: {
+        saveData() {
+            console.log(123)
+        },
         compare(attr) {
             return function t(a, b) {
                 const val1 = a[attr]
@@ -222,13 +198,11 @@ export default {
             }
         },
         holdUp() {
-            console.log(123)
             if (!this.isSave) {
                 clearInterval(this.time)
             }
         },
         holdDown() {
-            console.log(456)
             this.isSave = false
             const timeStart = new Date().getTime()
             this.time = setInterval(() => {
@@ -248,9 +222,16 @@ export default {
             toExcel({ th, data, fileName, fileType, sheetName })
         },
         dianzan(id) {
+            this.caipinglist.forEach(e => {
+                if (e.mid === id) {
+                    e.ClickLike_Status = true
+                    setTimeout(() => {
+                        e.ClickLike_Status = false
+                    }, 900)
+                }
+            })
             this.dianzanlist.forEach(e => {
                 if (e.mid === id) {
-                    console.log(e.mid)
                     e.num += 1
                 }
             })
@@ -278,6 +259,7 @@ export default {
                 this.caipingitem = {
                     mid: val['编号'],
                     names: val['菜单'],
+                    ClickLike_Status: false,
                 }
                 this.caipinglist.push(this.caipingitem)
             })
@@ -288,10 +270,76 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+.ClickLike-box {
+    position: relative;
+    img {
+        width: 40px;
+        height: 40px;
+    }
+    .animate {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        z-index: 100;
+        animation: ClickLikeAni 1s ease;
+        background-image: url("../assets/imgs/hongxin.png");
+        background-size: cover;
+    }
+}
+@keyframes ClickLikeAni {
+    0% {
+        top:0px;
+        opacity: 1;
+    }
+    10% {
+        top:-3px;
+    }
+    20% {
+        top:-6px;
+    }
+    30% {
+        top:-9px;
+    }
+    40% {
+        top:-12px;
+        transform: rotate(6deg);
+        opacity: 0.6;
+    }
+    50% {
+        top:-15px;
+        transform: rotate(12deg);
+        opacity: 0.5;
+    }
+    60% {
+        top:-18px;
+        transform: rotate(6deg);
+        opacity: 0.4;
+    }
+    70% {
+        top:-21px;
+        transform: rotate(0deg);
+        opacity: 0.3;
+    }
+    80% {
+        top:-24px;
+        transform: rotate(-6deg);
+        opacity: 0.2;
+    }
+    90% {
+        top:-27px;
+        transform: rotate(-12deg);
+        opacity: 0.1;
+    }
+    100% {
+        top:-30px;
+        transform: rotate(-6deg);
+        opacity: 0;
+    }
+}
 .img_dianzan {
-    height: 50px;
-    width:50px;
+    height: 40px;
+    width:40px;
 }
 .title {
     background-color: rgba(255, 218, 185, 0.8);
@@ -299,7 +347,7 @@ export default {
     font-weight: 600;
 }
 .ul1 {
-    height: 100%;
+    height: 500px;
 }
 .li1 {
     height: 50px;
@@ -309,7 +357,7 @@ export default {
     position: relative;
 }
 .ul2 {
-    height: 100%;
+    height: 250px;
 }
 .li_title {
     height: 50px;
@@ -317,22 +365,21 @@ export default {
     line-height: 50px;
     text-align: center;
     position: relative;
+    margin-top: 10px;
 }
 .caiping1_title {
     font-size: 22px;
     position: absolute;
     top: 50%;
-    left: 50%;
-    margin-top: -25px;
-    margin-left: -95px;
+    left: 25%;
+    margin: -25px -20px;
 }
 .caiping2_title {
     font-size: 22px;
     position: absolute;
     top: 50%;
     left: 75%;
-    margin-top: -25px;
-    margin-left: -40px;
+    margin: -25px -20px;
 }
 .li2 {
     height: 50px;
@@ -345,24 +392,22 @@ export default {
     font-size: 30px;
     position: absolute;
     top: 50%;
-    left: 50%;
-    margin-top: -20px;
-    margin-left: -95px;
+    left: 25%;
+    margin: -25px -30px;
 }
 .caiping2 {
     font-size: 30px;
     position: absolute;
     top: 50%;
     left: 75%;
-    margin-top: -20px;
-    margin-left: -40px;
+    margin: -25px -15px;
 }
 .dianzan_title {
     font-size: 22px;
     position: absolute;
     top: 50%;
     left: 25%;
-    margin: -25px 20px;
+    margin: -25px -20px;
 }
 .dianzan1_title {
     font-size: 22px;
@@ -376,7 +421,7 @@ export default {
     position: absolute;
     top: 50%;
     left: 25%;
-    margin: -15px 20px;
+    margin: -15px -30px;
 }
 .dianzan1 {
     font-size: 30px;
@@ -394,5 +439,8 @@ export default {
 .grid-content {
   border-radius: 4px;
   min-height: 100%;
+}
+.el-scrollbar__wrap {
+  overflow-x: hidden;
 }
 </style>
