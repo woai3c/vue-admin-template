@@ -1,10 +1,13 @@
 <template>
     <el-container :style="note">
-        <el-main id="saveData" @touchstart="saveData()">
+        <el-main>
             <el-row>
                 <el-col :span="8">
                     <div class="grid-content bg-purple"
-                     @mousedown="holdDown()" @mouseup="holdUp()">
+                     @mousedown="holdDown()"
+                     @mouseup="holdUp()"
+                     @touchstart="saveData_start"
+                     @touchend="saveData_end">
                         <ul class="ul1">
                             <li class="li_title title">
                                 <span class="dianzan_title">菜品</span>
@@ -23,7 +26,10 @@
                 </el-col>
                 <el-col :span="8">
                     <div class="grid-content bg-purple"
-                     @mousedown="holdDown()" @mouseup="holdUp()">
+                     @mousedown="holdDown()"
+                     @mouseup="holdUp()"
+                     @touchstart="saveData_start"
+                     @touchend="saveData_end">
                         <ul class="ul1">
                             <li class="li_title title">
                                 <span class="dianzan_title">菜品</span>
@@ -42,7 +48,10 @@
                 </el-col>
                 <el-col :span="8">
                     <div class="grid-content bg-purple"
-                     @mousedown="holdDown()" @mouseup="holdUp()">
+                     @mousedown="holdDown()"
+                     @mouseup="holdUp()"
+                     @touchstart="saveData_start"
+                     @touchend="saveData_end">
                         <ul class="ul1">
                             <li class="li_title title">
                                 <span class="dianzan_title">菜品</span>
@@ -174,6 +183,7 @@ export default {
             caipingitem: { mid: 0, names: '', ClickLike_Status: false },
             dianzanlist: [],
             caipinglist: [],
+            X_dir: 0,
             time: setInterval(() => {}),
             isSave: true,
             isShow: true,
@@ -187,8 +197,15 @@ export default {
     mounted() {
     },
     methods: {
-        saveData() {
-            console.log(123)
+        saveData_end(e) {
+            const xEnd = e.changedTouches[0].clientX
+            if (xEnd - this.X_dir > 400) {
+                this.saveToExcel()
+            }
+        },
+        saveData_start(e) {
+            const xStart = e.targetTouches[0].clientX
+            this.X_dir = xStart
         },
         compare(attr) {
             return function t(a, b) {
@@ -216,7 +233,7 @@ export default {
         },
         saveToExcel() {
             const th = ['菜单', '点赞数量']
-            const val = ['name', 'num']
+            const val = ['names', 'num']
             const data = this.dianzanlist.map(v => val.map(k => v[k]))
             const [fileName, fileType, sheetName] = ['data', 'xlsx', '点赞']
             toExcel({ th, data, fileName, fileType, sheetName })
