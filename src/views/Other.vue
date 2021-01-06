@@ -1,6 +1,19 @@
 <template>
-    <el-container :style="note">
+    <el-container class="ct" :style="note">
         <el-main>
+            <el-row>
+                <el-col :offset="8" :span="8">
+                    <el-input
+                        placeholder="请输入内容"
+                        v-model="title"
+                        @blur="blurInput($event)"
+                        :disabled="false">
+                    </el-input>
+                    <p class="title_p">
+                        {{title}}
+                    </p>
+                </el-col>
+            </el-row>
             <el-row>
                 <el-col :span="8">
                     <div class="grid-content bg-purple"
@@ -15,7 +28,7 @@
                             </li>
                             <el-scrollbar style='height:90%'>
                                 <template v-for="(item,index) in dianzanlist">
-                                    <li v-if="index<10" :key="index" class="li1">
+                                    <li v-if="index<dianzancount" :key="index" class="li1">
                                         <span class="dianzan" >{{item.names}}</span>
                                         <span class="dianzan1">{{item.num}}</span>
                                     </li>
@@ -37,7 +50,9 @@
                             </li>
                             <el-scrollbar style='height:90%'>
                                 <template v-for="(item,index) in dianzanlist">
-                                    <li v-if="index<20 && index>=10" :key="index" class="li1">
+                                    <li v-if="index<dianzancount*2 && index>=dianzancount"
+                                        :key="index"
+                                        class="li1">
                                         <span class="dianzan" >{{item.names}}</span>
                                         <span class="dianzan1">{{item.num}}</span>
                                     </li>
@@ -59,7 +74,9 @@
                             </li>
                             <el-scrollbar style='height:90%'>
                                 <template v-for="(item,index) in dianzanlist">
-                                    <li v-if="index>=20" :key="index" class="li1">
+                                    <li v-if="index<dianzancount*3 && index>=dianzancount*2"
+                                        :key="index"
+                                        class="li1">
                                         <span class="dianzan" >{{item.names}}</span>
                                         <span class="dianzan1">{{item.num}}</span>
                                     </li>
@@ -80,7 +97,7 @@
                             </li>
                             <el-scrollbar style='height:80%'>
                                 <template v-for="(item,index) in caipinglist">
-                                    <li v-if="index<10" :key="index" class="li2">
+                                    <li v-if="index<(datacount/3)*1" :key="index" class="li2">
                                         <span class="caiping1" >{{item.names}}</span>
                                         <div class="caiping2 ClickLike-box"
                                             @click="dianzan(item.mid)">
@@ -106,7 +123,8 @@
                             </li>
                             <el-scrollbar style='height:80%'>
                                 <template v-for="(item,index) in caipinglist">
-                                    <li v-if="index<20 && index>=10" :key="index" class="li2">
+                                    <li v-if="index<(datacount/3)*2 && index>=(datacount/3)*1"
+                                        :key="index" class="li2">
                                         <span class="caiping1" >{{item.names}}</span>
                                         <div class="caiping2 ClickLike-box"
                                             @click="dianzan(item.mid)">
@@ -132,7 +150,7 @@
                             </li>
                             <el-scrollbar style='height:80%'>
                                 <template v-for="(item,index) in caipinglist">
-                                    <li v-if="index>=20" :key="index" class="li2">
+                                    <li v-if="index>=(datacount/3)*2" :key="index" class="li2">
                                         <span class="caiping1" >{{item.names}}</span>
                                         <div class="caiping2 ClickLike-box"
                                             @click="dianzan(item.mid)">
@@ -178,11 +196,14 @@ export default {
     name: 'other',
     data() {
         return {
+            datacount: 0,
+            dianzancount: 9,
             dianzanimg: require('../assets/imgs/dianzan.png'),
             dianzanitem: { mid: 0, names: '', num: 0 },
             caipingitem: { mid: 0, names: '', ClickLike_Status: false },
             dianzanlist: [],
             caipinglist: [],
+            title: '',
             X_dir: 0,
             time: setInterval(() => {}),
             isSave: true,
@@ -197,6 +218,12 @@ export default {
     mounted() {
     },
     methods: {
+        blurInput($even) {
+            $even.target.hidden = true
+            const input = document.getElementsByClassName('el-input')[0]
+            const pIn = input.parentNode
+            pIn.removeChild(input)
+        },
         saveData_end(e) {
             const xEnd = e.changedTouches[0].clientX
             if (xEnd - this.X_dir > 400) {
@@ -279,6 +306,7 @@ export default {
                     ClickLike_Status: false,
                 }
                 this.caipinglist.push(this.caipingitem)
+                this.datacount += 1
             })
             this.dianzanlist.sort(this.compare('num'))
             this.isShow = false
@@ -288,6 +316,15 @@ export default {
 </script>
 
 <style lang="less">
+.ct {
+    height: 100%
+}
+.title_p {
+    font-family: '微软雅黑';
+    font-size: 30px;
+    font-weight: 600;
+    text-align: center;
+}
 .ClickLike-box {
     position: relative;
     img {
@@ -296,11 +333,11 @@ export default {
     }
     .animate {
         position: absolute;
-        width: 40px;
-        height: 40px;
+        width: 35px;
+        height: 35px;
         z-index: 100;
         animation: ClickLikeAni 1s ease;
-        background-image: url("../assets/imgs/hongxin.png");
+        background-image: url("../assets/imgs/dianzan.png");
         background-size: cover;
     }
 }
