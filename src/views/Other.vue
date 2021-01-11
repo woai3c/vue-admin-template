@@ -95,7 +95,7 @@
                                 <span class="caiping1_title">菜品</span>
                                 <span class="caiping2_title">点赞</span>
                             </li>
-                            <el-scrollbar style='height:80%'>
+                            <el-scrollbar style='height:70%'>
                                 <template v-for="(item,index) in caipinglist">
                                     <li v-if="index<(datacount/3)*1" :key="index" class="li2">
                                         <span class="caiping1" >{{item.names}}</span>
@@ -121,7 +121,7 @@
                                 <span class="caiping1_title">菜品</span>
                                 <span class="caiping2_title">点赞</span>
                             </li>
-                            <el-scrollbar style='height:80%'>
+                            <el-scrollbar style='height:70%'>
                                 <template v-for="(item,index) in caipinglist">
                                     <li v-if="index<(datacount/3)*2 && index>=(datacount/3)*1"
                                         :key="index" class="li2">
@@ -148,7 +148,7 @@
                                 <span class="caiping1_title">菜品</span>
                                 <span class="caiping2_title">点赞</span>
                             </li>
-                            <el-scrollbar style='height:80%'>
+                            <el-scrollbar style='height:70%'>
                                 <template v-for="(item,index) in caipinglist">
                                     <li v-if="index>=(datacount/3)*2" :key="index" class="li2">
                                         <span class="caiping1" >{{item.names}}</span>
@@ -197,7 +197,7 @@ export default {
     data() {
         return {
             datacount: 0,
-            dianzancount: 9,
+            dianzancount: 7,
             dianzanimg: require('../assets/imgs/dianzan.png'),
             dianzanitem: { mid: 0, names: '', num: 0 },
             caipingitem: { mid: 0, names: '', ClickLike_Status: false },
@@ -401,7 +401,7 @@ export default {
     font-weight: 600;
 }
 .ul1 {
-    height: 500px;
+    height: 400px;
 }
 .li1 {
     height: 50px;
@@ -411,7 +411,7 @@ export default {
     position: relative;
 }
 .ul2 {
-    height: 250px;
+    height: 200px;
 }
 .li_title {
     height: 50px;
