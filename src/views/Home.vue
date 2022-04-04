@@ -1,9 +1,6 @@
 <template>
     <div class="home-container">
         <div class="home-content">
-            <Button @click="getUserData">ajax 测试</Button>
-
-            <Input :rows="30" style="margin-top: 20px" v-model="userInfo" type="textarea" />
         </div>
     </div>
 </template>

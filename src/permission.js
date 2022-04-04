@@ -1,7 +1,7 @@
 import { LoadingBar } from 'view-design'
+import createRoutes from '@/utils/createRoutes'
 import router from './router'
 import store from './store'
-import createRoutes from '@/utils/createRoutes'
 import { getDocumentTitle, resetTokenAndClearUser } from './utils'
 
 // 是否有菜单数据
