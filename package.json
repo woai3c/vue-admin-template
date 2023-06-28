@@ -9,18 +9,18 @@
     "test": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "axios": "^0.21.2",
-    "core-js": "^3.4.3",
+    "axios": "^0.19.0",
+    "core-js": "^3.31.0",
     "view-design": "^4.0.2",
     "vue": "^2.6.10",
     "vue-router": "^3.0.6",
     "vuex": "^3.1.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^5.0.8",
-    "@vue/cli-plugin-eslint": "^5.0.8",
-    "@vue/cli-plugin-unit-jest": "^5.0.8",
-    "@vue/cli-service": "^5.0.8",
+    "@vue/cli-plugin-babel": "^4.1.0",
+    "@vue/cli-plugin-eslint": "^4.1.0",
+    "@vue/cli-plugin-unit-jest": "^4.1.0",
+    "@vue/cli-service": "^4.1.0",
     "@vue/eslint-config-airbnb": "^4.0.0",
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-eslint": "^10.0.3",
