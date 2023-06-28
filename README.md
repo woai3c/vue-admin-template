@@ -1,4 +1,4 @@
-# Vue 轻量级后台管理系统基础模板
+# Vue 轻量级后台管理系统基础模板（停止维护，不建议使用）
 
 ### [在线预览](https://woai3c.github.io/vue-admin-template)
 ### [更新日志](https://github.com/woai3c/vue-admin-template/blob/master/update.md)
